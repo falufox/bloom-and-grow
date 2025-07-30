@@ -3,6 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card'
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { useGarden, PlantingSpace } from '../contexts/GardenContext';
+import { RaisedBedIcon } from '../components/icons/CustomIcons';
 import { Plus, Edit3, Camera, Grid, Package } from 'lucide-react';
 
 
@@ -99,7 +100,7 @@ export const Planning: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <span className="flex items-center">
-              {isContainerGardening ? <Package className="w-5 h-5 mr-2" /> : <Grid className="w-5 h-5 mr-2" />}
+              {isContainerGardening ? <Package className="w-5 h-5 mr-2" /> : <RaisedBedIcon className="w-5 h-5 mr-2" />}
               {spaceLabel} Layout
             </span>
             <Button

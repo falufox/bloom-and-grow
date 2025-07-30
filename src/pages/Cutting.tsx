@@ -3,7 +3,8 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card'
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { useGarden } from '../contexts/GardenContext';
-import { Plus, Scissors, Package, DollarSign } from 'lucide-react';
+import { GardenShearsIcon } from '../components/icons/CustomIcons';
+import { Plus, Package, DollarSign } from 'lucide-react';
 
 interface HarvestEntry {
   id: string;
@@ -177,7 +178,7 @@ export const Cutting: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <span className="flex items-center">
-              <Scissors className="w-5 h-5 mr-2" />
+              <GardenShearsIcon className="w-5 h-5 mr-2" />
               Harvest Log
             </span>
             <Button onClick={() => setShowAddForm(true)}>

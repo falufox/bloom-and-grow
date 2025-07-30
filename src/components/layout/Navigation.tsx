@@ -5,20 +5,19 @@ import {
   Settings, 
   Calendar, 
   Wrench, 
-  Flower2, 
-  Scissors, 
-  DollarSign 
+  Flower2 
 } from 'lucide-react';
+import { GardenShearsIcon, MoneyBagsIcon, RaisedBedIcon } from '../icons/CustomIcons';
 import { clsx } from 'clsx';
 
 const navigationItems = [
   { name: 'Garden at a Glance', href: '/', icon: LayoutDashboard },
   { name: 'Garden Setup', href: '/setup', icon: Settings },
-  { name: 'Planning', href: '/planning', icon: Calendar },
+  { name: 'Planning', href: '/planning', icon: RaisedBedIcon },
   { name: 'Prepping', href: '/prepping', icon: Wrench },
   { name: 'Planting', href: '/planting', icon: Flower2 },
-  { name: 'Cutting', href: '/cutting', icon: Scissors },
-  { name: 'Selling', href: '/selling', icon: DollarSign },
+  { name: 'Cutting', href: '/cutting', icon: GardenShearsIcon },
+  { name: 'Selling', href: '/selling', icon: MoneyBagsIcon },
 ];
 
 export const Navigation: React.FC = () => {

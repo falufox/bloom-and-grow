@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
+import { MoneyBagsIcon } from '../components/icons/CustomIcons';
 import { Plus, DollarSign, TrendingUp, MapPin, CreditCard, Trash2, Calculator, Receipt, Smartphone, Wifi, WifiOff } from 'lucide-react';
 
 interface Sale {
@@ -205,7 +206,7 @@ export const Selling: React.FC = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            <DollarSign className="w-5 h-5 mr-2" />
+            <MoneyBagsIcon className="w-5 h-5 mr-2" />
             Recent Sales
           </CardTitle>
         </CardHeader>
