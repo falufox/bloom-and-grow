@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
@@ -7,6 +8,7 @@ import { Settings, MapPin, Target, Flower, Package } from 'lucide-react';
 
 export const GardenSetup: React.FC = () => {
   const { gardenSetup, setGardenSetup } = useGarden();
+  const navigate = useNavigate();
   const [containerSpecs, setContainerSpecs] = useState({
     type: 'round' as 'round' | 'rectangular' | 'square',
     diameter: '',
@@ -56,6 +58,12 @@ export const GardenSetup: React.FC = () => {
     };
     
     setGardenSetup({ ...gardenSetup, containerSpecs: specs });
+  };
+
+  const saveDraft = () => {
+    // Save current setup to local storage or backend
+    localStorage.setItem('garden-setup-draft', JSON.stringify(gardenSetup));
+    alert('Garden setup saved as draft! You can continue later.');
   };
 
   return (
@@ -289,8 +297,8 @@ export const GardenSetup: React.FC = () => {
 
       {/* Action Buttons */}
       <div className="flex justify-center space-x-4">
-        <Button variant="outline">Save Draft</Button>
-        <Button>Continue to Planning</Button>
+        <Button onClick={saveDraft} variant="outline">Save Draft</Button>
+        <Button onClick={() => navigate('/planning')}>Continue to Planning</Button>
       </div>
     </div>
   );

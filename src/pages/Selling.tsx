@@ -117,6 +117,34 @@ export const Selling: React.FC = () => {
     console.log('Syncing POS data...');
   };
 
+  const generateReport = () => {
+    // Generate sales report functionality
+    const reportData = {
+      totalRevenue,
+      totalSales: sales.length,
+      averageSale: avgSaleAmount,
+      periodCovered: 'This Month',
+      topVenue: Object.entries(
+        sales.reduce((acc, sale) => {
+          acc[sale.venue] = (acc[sale.venue] || 0) + sale.total;
+          return acc;
+        }, {} as Record<string, number>)
+      ).sort(([,a], [,b]) => b - a)[0]?.[0] || 'No sales yet'
+    };
+    
+    alert(`Sales Report Generated:\n\nTotal Revenue: $${reportData.totalRevenue}\nTotal Sales: ${reportData.totalSales}\nAverage Sale: $${reportData.averageSale.toFixed(2)}\nTop Venue: ${reportData.topVenue}`);
+  };
+
+  const processCardPayment = () => {
+    alert('Card payment processing initiated. In a real app, this would integrate with your payment processor.');
+    setShowPOSForm(false);
+  };
+
+  const processCashPayment = () => {
+    alert('Cash payment recorded. Transaction completed.');
+    setShowPOSForm(false);
+  };
+
   const venueLabels = {
     'farmers-market': 'Farmers Market',
     'csa': 'CSA',
@@ -196,7 +224,7 @@ export const Selling: React.FC = () => {
           {posConnected ? <Wifi className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} /> : <WifiOff className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />}
           Sync POS Data
         </Button>
-        <Button variant="outline" className="h-16">
+        <Button onClick={generateReport} variant="outline" className="h-16">
           <Receipt className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
           Generate Report
         </Button>
@@ -458,8 +486,8 @@ export const Selling: React.FC = () => {
                 <p className="text-sm text-cool-600">Tap to charge customer</p>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <Button className="h-12">💳 Card Payment</Button>
-                <Button variant="outline" className="h-12">💵 Cash Payment</Button>
+                <Button onClick={processCardPayment} className="h-12">💳 Card Payment</Button>
+                <Button onClick={processCashPayment} variant="outline" className="h-12">💵 Cash Payment</Button>
               </div>
             </div>
           </CardContent>

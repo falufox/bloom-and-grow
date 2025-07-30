@@ -17,59 +17,58 @@ export const Planning: React.FC = () => {
   const spaceType = isContainerGardening ? 'container' : 'bed';
   const spaceLabel = isContainerGardening ? 'Container' : 'Bed';
   
-  // Initialize with sample data if empty
+  // Generate flowers from garden setup selections
+  const generateFlowersFromSetup = () => {
+    const flowerColors: { [key: string]: string } = {
+      'Sunflowers': '#FFD700',
+      'Zinnias': '#FF6B6B', 
+      'Cosmos': '#FF69B4',
+      'Marigolds': '#FFA500',
+      'Celosia': '#DC143C',
+      'Dahlias': '#9932CC',
+      'Rudbeckia': '#FFD700',
+      'Delphiniums': '#4169E1',
+      'Larkspur': '#6495ED',
+      'Sweet Peas': '#DDA0DD'
+    };
+    
+    return gardenSetup.flowerTypes.map(flowerName => ({
+      name: flowerName,
+      color: flowerColors[flowerName] || '#10b981',
+      quantity: isContainerGardening ? Math.floor(Math.random() * 6) + 2 : Math.floor(Math.random() * 20) + 8
+    }));
+  };
+  
+  // Initialize with data based on garden setup
   useEffect(() => {
-    if (plantingSpaces.length === 0) {
-      const sampleSpaces: PlantingSpace[] = isContainerGardening ? [
-        {
-          id: '1',
-          name: 'Container 1',
-          type: 'container',
-          containerType: gardenSetup.containerSpecs?.type || 'round',
-          dimensions: gardenSetup.containerSpecs?.diameter 
-            ? { diameter: gardenSetup.containerSpecs.diameter, height: gardenSetup.containerSpecs.height }
-            : { length: gardenSetup.containerSpecs?.length || 18, width: gardenSetup.containerSpecs?.width || 12, height: gardenSetup.containerSpecs?.height || 10 },
-          flowers: [
-            { name: 'Sunflowers', color: '#FFD700', quantity: 3 },
-            { name: 'Zinnias', color: '#FF6B6B', quantity: 6 }
-          ]
-        },
-        {
-          id: '2',
-          name: 'Container 2',
-          type: 'container',
-          containerType: gardenSetup.containerSpecs?.type || 'round',
-          dimensions: gardenSetup.containerSpecs?.diameter 
-            ? { diameter: gardenSetup.containerSpecs.diameter, height: gardenSetup.containerSpecs.height }
-            : { length: gardenSetup.containerSpecs?.length || 18, width: gardenSetup.containerSpecs?.width || 12, height: gardenSetup.containerSpecs?.height || 10 },
-          flowers: [
-            { name: 'Cosmos', color: '#FF69B4', quantity: 4 }
-          ]
-        }
-      ] : [
-        {
-          id: '1',
-          name: 'Bed 1',
-          type: 'bed',
-          dimensions: { length: 8, width: 4 },
-          flowers: [
-            { name: 'Sunflowers', color: '#FFD700', quantity: 12 },
-            { name: 'Zinnias', color: '#FF6B6B', quantity: 24 }
-          ]
-        },
-        {
-          id: '2',
-          name: 'Bed 2',
-          type: 'bed',
-          dimensions: { length: 6, width: 4 },
-          flowers: [
-            { name: 'Cosmos', color: '#FF69B4', quantity: 18 }
-          ]
-        }
-      ];
+    if (plantingSpaces.length === 0 && gardenSetup.flowerTypes.length > 0) {
+      const setupFlowers = generateFlowersFromSetup();
+      const numSpaces = isContainerGardening ? 2 : 2; // Start with 2 spaces
+      
+      const sampleSpaces: PlantingSpace[] = Array.from({ length: numSpaces }, (_, index) => {
+        const spaceNumber = index + 1;
+        // Distribute flowers across spaces
+        const flowersForSpace = setupFlowers.filter((_, flowerIndex) => flowerIndex % numSpaces === index);
+        
+        return {
+          id: spaceNumber.toString(),
+          name: `${spaceLabel} ${spaceNumber}`,
+          type: spaceType,
+          ...(isContainerGardening && {
+            containerType: gardenSetup.containerSpecs?.type || 'round'
+          }),
+          dimensions: isContainerGardening 
+            ? gardenSetup.containerSpecs?.diameter 
+              ? { diameter: gardenSetup.containerSpecs.diameter, height: gardenSetup.containerSpecs.height || 12 }
+              : { length: gardenSetup.containerSpecs?.length || 18, width: gardenSetup.containerSpecs?.width || 12, height: gardenSetup.containerSpecs?.height || 10 }
+            : { length: 8, width: 4 },
+          flowers: flowersForSpace.length > 0 ? flowersForSpace : setupFlowers.slice(0, 2) // Fallback
+        };
+      });
+      
       setPlantingSpaces(sampleSpaces);
     }
-  }, [gardenSetup, plantingSpaces.length, setPlantingSpaces, isContainerGardening]);
+  }, [gardenSetup, plantingSpaces.length, setPlantingSpaces, isContainerGardening, spaceLabel, spaceType]);
 
   const addSpace = () => {
     if (newSpace.name && (isContainerGardening ? newSpace.diameter || (newSpace.length && newSpace.width) : (newSpace.length && newSpace.width))) {
