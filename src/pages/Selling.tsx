@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
-import { Plus, DollarSign, TrendingUp, MapPin, CreditCard } from 'lucide-react';
+import { Plus, DollarSign, TrendingUp, MapPin, CreditCard, Trash2, Calculator, Receipt, Smartphone, Wifi, WifiOff } from 'lucide-react';
 
 interface Sale {
   id: string;
@@ -51,16 +51,69 @@ export const Selling: React.FC = () => {
   ]);
 
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showPOSForm, setShowPOSForm] = useState(false);
+  const [posConnected, setPosConnected] = useState(false);
   const [newSale, setNewSale] = useState({
     customer: '',
     venue: 'farmers-market' as Sale['venue'],
     paymentMethod: 'cash',
-    items: [{ type: 'bouquet' as SaleItem['type'], name: '', quantity: '', price: '' }]
+    items: [{ type: 'bouquet' as SaleItem['type'], name: '', quantity: '1', price: '0.00' }]
+  });
+  
+  const [posIntegrations] = useState({
+    square: { connected: false, lastSync: null },
+    stripe: { connected: false, lastSync: null },
+    paypal: { connected: false, lastSync: null }
   });
 
+  const addSaleItem = () => {
+    setNewSale({
+      ...newSale,
+      items: [...newSale.items, { type: 'bouquet', name: '', quantity: '1', price: '0.00' }]
+    });
+  };
+  
+  const removeSaleItem = (index: number) => {
+    setNewSale({
+      ...newSale,
+      items: newSale.items.filter((_, i) => i !== index)
+    });
+  };
+  
+  const updateSaleItem = (index: number, field: string, value: string) => {
+    const updatedItems = [...newSale.items];
+    updatedItems[index] = { ...updatedItems[index], [field]: value };
+    setNewSale({ ...newSale, items: updatedItems });
+  };
+  
+  const calculateTotal = () => {
+    return newSale.items.reduce((total, item) => {
+      const quantity = parseInt(item.quantity) || 0;
+      const price = parseFloat(item.price) || 0;
+      return total + (quantity * price);
+    }, 0);
+  };
+  
   const addSale = () => {
     // Implementation for adding a new sale
+    console.log('New sale:', { ...newSale, total: calculateTotal() });
     setShowAddForm(false);
+    setNewSale({
+      customer: '',
+      venue: 'farmers-market',
+      paymentMethod: 'cash',
+      items: [{ type: 'bouquet', name: '', quantity: '1', price: '0.00' }]
+    });
+  };
+  
+  const connectPOS = (provider: string) => {
+    // Simulate POS connection
+    console.log(`Connecting to ${provider}...`);
+    setPosConnected(true);
+  };
+  
+  const syncPOSData = () => {
+    console.log('Syncing POS data...');
   };
 
   const venueLabels = {
@@ -124,18 +177,27 @@ export const Selling: React.FC = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Button onClick={() => setShowAddForm(true)} className="h-16">
           <Plus className="w-5 h-5 mr-2" />
-          Record New Sale
+          Manual Sale Entry
+        </Button>
+        <Button 
+          onClick={() => setShowPOSForm(true)} 
+          variant="outline" 
+          className="h-16"
+          disabled={!posConnected}
+        >
+          <Smartphone className="w-5 h-5 mr-2" />
+          Quick POS Sale
+        </Button>
+        <Button onClick={syncPOSData} variant="outline" className="h-16">
+          {posConnected ? <Wifi className="w-5 h-5 mr-2" /> : <WifiOff className="w-5 h-5 mr-2" />}
+          Sync POS Data
         </Button>
         <Button variant="outline" className="h-16">
-          <CreditCard className="w-5 h-5 mr-2" />
-          Process Payment
-        </Button>
-        <Button variant="outline" className="h-16">
-          <TrendingUp className="w-5 h-5 mr-2" />
-          View Analytics
+          <Receipt className="w-5 h-5 mr-2" />
+          Generate Report
         </Button>
       </div>
 
@@ -175,21 +237,63 @@ export const Selling: React.FC = () => {
               
               {/* Sale Items */}
               <div className="mb-4">
-                <label className="block text-sm font-medium text-midnight-blue mb-2">Items Sold</label>
-                <div className="space-y-3 p-3 bg-white rounded-lg border">
-                  <div className="grid grid-cols-4 gap-2">
-                    <div>
-                      <select className="w-full text-sm rounded border-gray-300">
-                        <option>Bouquet</option>
-                        <option>Individual Stems</option>
-                        <option>Bucket</option>
-                      </select>
-                    </div>
-                    <Input placeholder="Item name" className="text-sm" />
-                    <Input type="number" placeholder="Qty" className="text-sm" />
-                    <Input type="number" placeholder="Price" className="text-sm" />
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-sm font-medium text-midnight-blue">Items Sold</label>
+                  <div className="flex items-center space-x-2 text-sm text-gray-600">
+                    <Calculator className="w-4 h-4" />
+                    <span>Total: ${calculateTotal().toFixed(2)}</span>
                   </div>
-                  <Button variant="ghost" size="sm">
+                </div>
+                <div className="space-y-3 p-3 bg-white rounded-lg border">
+                  {newSale.items.map((item, index) => (
+                    <div key={index} className="grid grid-cols-6 gap-2 items-end">
+                      <div>
+                        <select 
+                          value={item.type}
+                          onChange={(e) => updateSaleItem(index, 'type', e.target.value)}
+                          className="w-full text-sm rounded border-gray-300 px-2 py-1"
+                        >
+                          <option value="bouquet">Bouquet</option>
+                          <option value="stems">Stems</option>
+                          <option value="bucket">Bucket</option>
+                        </select>
+                      </div>
+                      <Input 
+                        placeholder="Item name" 
+                        className="text-sm" 
+                        value={item.name}
+                        onChange={(e) => updateSaleItem(index, 'name', e.target.value)}
+                      />
+                      <Input 
+                        type="number" 
+                        placeholder="Qty" 
+                        className="text-sm" 
+                        value={item.quantity}
+                        onChange={(e) => updateSaleItem(index, 'quantity', e.target.value)}
+                      />
+                      <Input 
+                        type="number" 
+                        step="0.01"
+                        placeholder="Price" 
+                        className="text-sm" 
+                        value={item.price}
+                        onChange={(e) => updateSaleItem(index, 'price', e.target.value)}
+                      />
+                      <div className="text-sm font-medium text-midnight-blue px-2">
+                        ${((parseInt(item.quantity) || 0) * (parseFloat(item.price) || 0)).toFixed(2)}
+                      </div>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => removeSaleItem(index)}
+                        disabled={newSale.items.length === 1}
+                        className="p-1"
+                      >
+                        <Trash2 className="w-4 h-4 text-red-500" />
+                      </Button>
+                    </div>
+                  ))}
+                  <Button variant="ghost" size="sm" onClick={addSaleItem}>
                     <Plus className="w-4 h-4 mr-1" />
                     Add Item
                   </Button>
@@ -207,15 +311,25 @@ export const Selling: React.FC = () => {
                     <option value="cash">Cash</option>
                     <option value="card">Credit/Debit Card</option>
                     <option value="check">Check</option>
+                    <option value="venmo">Venmo</option>
                     <option value="square">Square</option>
                     <option value="stripe">Stripe</option>
+                    <option value="paypal">PayPal</option>
                   </select>
                 </div>
-                <Input
-                  label="Total Amount"
-                  type="number"
-                  placeholder="0.00"
-                />
+                <div>
+                  <label className="block text-sm font-medium text-midnight-blue mb-1">Total Amount</label>
+                  <div className="flex items-center space-x-2">
+                    <Input
+                      type="number"
+                      step="0.01"
+                      value={calculateTotal().toFixed(2)}
+                      readOnly
+                      className="bg-gray-50"
+                    />
+                    <span className="text-sm text-gray-500">(auto-calculated)</span>
+                  </div>
+                </div>
               </div>
 
               <div className="flex space-x-2">
@@ -323,37 +437,140 @@ export const Selling: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Payment Integration */}
+      {/* POS Integration & Quick Sale */}
+      {showPOSForm && (
+        <Card className="border-2 border-blue-300 bg-blue-50">
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              <span className="flex items-center">
+                <Smartphone className="w-5 h-5 mr-2" />
+                Quick POS Sale
+              </span>
+              <Button variant="ghost" size="sm" onClick={() => setShowPOSForm(false)}>×</Button>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="bg-white p-4 rounded-lg">
+              <div className="text-center mb-4">
+                <h3 className="text-lg font-semibold text-midnight-blue mb-2">Process Payment</h3>
+                <div className="text-3xl font-bold text-midnight-blue mb-2">${calculateTotal().toFixed(2)}</div>
+                <p className="text-sm text-gray-600">Tap to charge customer</p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <Button className="h-12">💳 Card Payment</Button>
+                <Button variant="outline" className="h-12">💵 Cash Payment</Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* POS Integration Status */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center">
-            <CreditCard className="w-5 h-5 mr-2" />
-            Payment Integration
+          <CardTitle className="flex items-center justify-between">
+            <span className="flex items-center">
+              <CreditCard className="w-5 h-5 mr-2" />
+              POS System Integration
+            </span>
+            <div className="flex items-center space-x-2">
+              {posConnected ? (
+                <><Wifi className="w-4 h-4 text-green-600" /><span className="text-sm text-green-600">Connected</span></>
+              ) : (
+                <><WifiOff className="w-4 h-4 text-red-600" /><span className="text-sm text-red-600">Disconnected</span></>
+              )}
+            </div>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className={`p-4 border-2 rounded-lg text-center transition-all ${
+              posIntegrations.square.connected 
+                ? 'border-green-300 bg-green-50' 
+                : 'border-dashed border-gray-300'
+            }`}>
               <div className="mb-3">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg mx-auto flex items-center justify-center mb-2">
                   <CreditCard className="w-6 h-6 text-blue-600" />
                 </div>
-                <h3 className="font-semibold text-midnight-blue">Square Integration</h3>
+                <h3 className="font-semibold text-midnight-blue">Square</h3>
               </div>
-              <p className="text-sm text-gray-600 mb-3">Connect your Square account to automatically import sales</p>
-              <Button variant="outline" size="sm">Connect Square</Button>
+              <p className="text-sm text-gray-600 mb-3">
+                {posIntegrations.square.connected 
+                  ? 'Auto-sync sales data from Square terminals'
+                  : 'Connect your Square account to automatically import sales'
+                }
+              </p>
+              <Button 
+                variant={posIntegrations.square.connected ? "outline" : "default"} 
+                size="sm"
+                onClick={() => connectPOS('square')}
+              >
+                {posIntegrations.square.connected ? 'Disconnect' : 'Connect Square'}
+              </Button>
             </div>
             
-            <div className="p-4 border-2 border-dashed border-gray-300 rounded-lg text-center">
+            <div className={`p-4 border-2 rounded-lg text-center transition-all ${
+              posIntegrations.stripe.connected 
+                ? 'border-green-300 bg-green-50' 
+                : 'border-dashed border-gray-300'
+            }`}>
               <div className="mb-3">
                 <div className="w-12 h-12 bg-purple-100 rounded-lg mx-auto flex items-center justify-center mb-2">
                   <CreditCard className="w-6 h-6 text-purple-600" />
                 </div>
-                <h3 className="font-semibold text-midnight-blue">Stripe Integration</h3>
+                <h3 className="font-semibold text-midnight-blue">Stripe</h3>
               </div>
-              <p className="text-sm text-gray-600 mb-3">Connect your Stripe account for online sales tracking</p>
-              <Button variant="outline" size="sm">Connect Stripe</Button>
+              <p className="text-sm text-gray-600 mb-3">
+                {posIntegrations.stripe.connected 
+                  ? 'Tracking online and in-person sales'
+                  : 'Connect your Stripe account for online sales tracking'
+                }
+              </p>
+              <Button 
+                variant={posIntegrations.stripe.connected ? "outline" : "default"} 
+                size="sm"
+                onClick={() => connectPOS('stripe')}
+              >
+                {posIntegrations.stripe.connected ? 'Disconnect' : 'Connect Stripe'}
+              </Button>
             </div>
+
+            <div className={`p-4 border-2 rounded-lg text-center transition-all ${
+              posIntegrations.paypal.connected 
+                ? 'border-green-300 bg-green-50' 
+                : 'border-dashed border-gray-300'
+            }`}>
+              <div className="mb-3">
+                <div className="w-12 h-12 bg-yellow-100 rounded-lg mx-auto flex items-center justify-center mb-2">
+                  <CreditCard className="w-6 h-6 text-yellow-600" />
+                </div>
+                <h3 className="font-semibold text-midnight-blue">PayPal</h3>
+              </div>
+              <p className="text-sm text-gray-600 mb-3">
+                {posIntegrations.paypal.connected 
+                  ? 'Syncing PayPal transactions'
+                  : 'Connect PayPal for mobile payments and online orders'
+                }
+              </p>
+              <Button 
+                variant={posIntegrations.paypal.connected ? "outline" : "default"} 
+                size="sm"
+                onClick={() => connectPOS('paypal')}
+              >
+                {posIntegrations.paypal.connected ? 'Disconnect' : 'Connect PayPal'}
+              </Button>
+            </div>
+          </div>
+          
+          <div className="mt-6 p-4 bg-champagne rounded-lg">
+            <h4 className="font-semibold text-midnight-blue mb-2">Integration Benefits</h4>
+            <ul className="text-sm text-gray-700 space-y-1">
+              <li>• Automatic sale recording from your POS system</li>
+              <li>• Real-time inventory tracking</li>
+              <li>• Consolidated reporting across all sales channels</li>
+              <li>• Reduced manual data entry and errors</li>
+            </ul>
           </div>
         </CardContent>
       </Card>

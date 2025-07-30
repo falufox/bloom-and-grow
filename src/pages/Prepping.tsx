@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
-import { CheckCircle2, Circle, Calendar, Wrench, Thermometer, Droplets } from 'lucide-react';
+import { useGarden } from '../contexts/GardenContext';
+import { CheckCircle2, Circle, Calendar, Wrench, Thermometer, Droplets, Sparkles, Trophy } from 'lucide-react';
 import { clsx } from 'clsx';
 
 interface PrepTask {
@@ -8,20 +9,24 @@ interface PrepTask {
   task: string;
   description: string;
   completed: boolean;
-  bedId: string;
+  spaceId: string;
   category: 'soil' | 'irrigation' | 'structure' | 'timing';
   priority: 'high' | 'medium' | 'low';
   estimatedTime: string;
 }
 
 export const Prepping: React.FC = () => {
+  const { plantingSpaces, gardenSetup } = useGarden();
+  const isContainerGardening = gardenSetup.gardenType === 'container';
+  const spaceLabel = isContainerGardening ? 'Container' : 'Bed';
+  
   const [tasks, setTasks] = useState<PrepTask[]>([
     {
       id: '1',
       task: 'Test soil pH',
       description: 'Check if soil pH is between 6.0-7.0 for optimal flower growth',
       completed: true,
-      bedId: 'bed-1',
+      spaceId: 'space-1',
       category: 'soil',
       priority: 'high',
       estimatedTime: '30 min'
@@ -31,7 +36,7 @@ export const Prepping: React.FC = () => {
       task: 'Add compost amendment',
       description: 'Mix 2-3 inches of compost into top 6 inches of soil',
       completed: false,
-      bedId: 'bed-1',
+      spaceId: 'space-1',
       category: 'soil',
       priority: 'high',
       estimatedTime: '2 hours'
@@ -41,7 +46,7 @@ export const Prepping: React.FC = () => {
       task: 'Install drip irrigation',
       description: 'Set up drip lines for consistent watering',
       completed: false,
-      bedId: 'bed-1',
+      spaceId: 'space-1',
       category: 'irrigation',
       priority: 'medium',
       estimatedTime: '1 hour'
@@ -51,20 +56,17 @@ export const Prepping: React.FC = () => {
       task: 'Check last frost date',
       description: 'Confirm planting timing for tender varieties',
       completed: false,
-      bedId: 'bed-2',
+      spaceId: 'space-2',
       category: 'timing',
       priority: 'high',
       estimatedTime: '15 min'
     }
   ]);
 
-  const [selectedBed, setSelectedBed] = useState<string>('all');
-
-  const beds = [
-    { id: 'bed-1', name: 'Bed 1 - Sunflowers & Zinnias', plantingDate: '2024-04-15' },
-    { id: 'bed-2', name: 'Bed 2 - Cosmos', plantingDate: '2024-04-20' },
-    { id: 'bed-3', name: 'Bed 3 - Dahlias', plantingDate: '2024-05-01' }
-  ];
+  const [selectedSpace, setSelectedSpace] = useState<string>('all');
+  
+  // Check if all prep tasks are completed
+  const allTasksCompleted = tasks.length > 0 && tasks.every(task => task.completed);
 
   const toggleTask = (taskId: string) => {
     setTasks(tasks.map(task => 
@@ -72,9 +74,9 @@ export const Prepping: React.FC = () => {
     ));
   };
 
-  const filteredTasks = selectedBed === 'all' 
+  const filteredTasks = selectedSpace === 'all' 
     ? tasks 
-    : tasks.filter(task => task.bedId === selectedBed);
+    : tasks.filter(task => task.spaceId === selectedSpace);
 
   const categoryIcons = {
     soil: Thermometer,
@@ -99,37 +101,56 @@ export const Prepping: React.FC = () => {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-midnight-blue mb-2">Bed Preparation</h1>
-        <p className="text-gray-600">Get your beds ready for optimal flower growth</p>
+        <h1 className="text-3xl font-bold text-midnight-blue mb-2">{spaceLabel} Preparation</h1>
+        <p className="text-gray-600">Get your {isContainerGardening ? 'containers' : 'beds'} ready for optimal flower growth</p>
       </div>
 
-      {/* Bed Filter */}
+      {/* Delightful completion feature */}
+      {allTasksCompleted && tasks.length > 0 && (
+        <Card className="border-2 border-emerald-300 bg-gradient-to-r from-emerald-50 to-green-50">
+          <CardContent className="p-6 text-center">
+            <Trophy className="w-12 h-12 text-emerald-600 mx-auto mb-4 animate-bounce" />
+            <h3 className="text-xl font-bold text-emerald-800 mb-2">🎆 Preparation Complete! 🎆</h3>
+            <p className="text-emerald-700 mb-4">
+              Outstanding work! All your {isContainerGardening ? 'containers' : 'beds'} are perfectly prepped and ready for planting.
+              Your flowers are going to love their new home!
+            </p>
+            <div className="flex justify-center items-center space-x-2 text-emerald-600">
+              <Sparkles className="w-5 h-5" />
+              <span className="font-medium">Time to start planting!</span>
+              <Sparkles className="w-5 h-5" />
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Space Filter */}
       <Card>
         <CardContent className="p-4">
           <div className="flex flex-wrap gap-2">
             <button
-              onClick={() => setSelectedBed('all')}
+              onClick={() => setSelectedSpace('all')}
               className={clsx(
                 'px-4 py-2 rounded-lg font-medium transition-colors',
-                selectedBed === 'all'
+                selectedSpace === 'all'
                   ? 'bg-midnight-blue text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               )}
             >
-              All Beds
+              All {spaceLabel}s
             </button>
-            {beds.map(bed => (
+            {plantingSpaces.map(space => (
               <button
-                key={bed.id}
-                onClick={() => setSelectedBed(bed.id)}
+                key={space.id}
+                onClick={() => setSelectedSpace(space.id)}
                 className={clsx(
                   'px-4 py-2 rounded-lg font-medium transition-colors',
-                  selectedBed === bed.id
+                  selectedSpace === space.id
                     ? 'bg-midnight-blue text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 )}
               >
-                {bed.name}
+                {space.name}
               </button>
             ))}
           </div>
@@ -229,7 +250,7 @@ export const Prepping: React.FC = () => {
                       
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4 text-sm text-gray-500">
-                          <span>Bed: {beds.find(b => b.id === task.bedId)?.name}</span>
+                          <span>{spaceLabel}: {plantingSpaces.find(s => s.id === task.spaceId)?.name}</span>
                           <span>Time: {task.estimatedTime}</span>
                           <span className={clsx(
                             'px-2 py-1 rounded text-xs font-medium',
