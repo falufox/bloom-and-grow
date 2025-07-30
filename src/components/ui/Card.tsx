@@ -22,8 +22,8 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       className={clsx(
-        'bg-white rounded-2xl shadow-apple border border-neutral-200/40 overflow-hidden',
-        'hover:shadow-apple-lg hover:border-neutral-200/60 transition-all duration-300 ease-out',
+        'bg-white/95 backdrop-blur-apple rounded-2xl shadow-apple border border-cool-200/40 overflow-hidden',
+        'hover:shadow-apple-lg hover:border-cool-200/60 hover:-translate-y-0.5 transition-all duration-300 ease-out transform-gpu',
         paddingClasses[padding],
         className
       )}
@@ -59,7 +59,7 @@ export const CardTitle: React.FC<CardTitleProps> = ({
   className
 }) => {
   return (
-    <h3 className={clsx('text-xl font-semibold text-neutral-900 tracking-tight', className)}>
+    <h3 className={clsx('text-xl font-display font-semibold text-midnight-900 tracking-tight', className)}>
       {children}
     </h3>
   );
@@ -75,7 +75,7 @@ export const CardContent: React.FC<CardContentProps> = ({
   className
 }) => {
   return (
-    <div className={clsx('text-neutral-600', className)}>
+    <div className={clsx('text-cool-600', className)}>
       {children}
     </div>
   );

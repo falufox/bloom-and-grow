@@ -8,7 +8,7 @@
   }
   
   body {
-    @apply bg-neutral-50 text-neutral-900 font-sans;
+    @apply bg-midnight-50 text-midnight-900 font-sans;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

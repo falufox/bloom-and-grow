@@ -61,8 +61,8 @@ export const GardenSetup: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-midnight-blue mb-2">Garden Setup</h1>
-        <p className="text-gray-600">Let's design your perfect flower farm</p>
+        <h1 className="text-4xl font-display font-light text-midnight-900 mb-3 tracking-tight">Garden Setup</h1>
+        <p className="text-cool-600 text-lg font-serif">Let's design your perfect flower farm</p>
       </div>
 
       {/* Garden Type Selection */}
@@ -80,12 +80,12 @@ export const GardenSetup: React.FC = () => {
                 key={type.id}
                 className={`p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 ${
                   gardenSetup.gardenType === type.id
-                    ? 'border-midnight-blue bg-blush bg-opacity-20'
+                    ? 'border-midnight-800 bg-midnight-50/80'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
                 onClick={() => handleGardenTypeChange(type.id)}
               >
-                <h3 className="font-semibold text-midnight-blue mb-2">{type.name}</h3>
+                <h3 className="font-semibold text-midnight-900 mb-2">{type.name}</h3>
                 <p className="text-sm text-gray-600">{type.description}</p>
               </div>
             ))}
@@ -105,7 +105,7 @@ export const GardenSetup: React.FC = () => {
           <CardContent>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-midnight-blue mb-3">Container Type</label>
+                <label className="block text-sm font-medium text-midnight-900 mb-3">Container Type</label>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {[
                     { id: 'round', name: 'Round Pots', description: 'Traditional circular containers' },
@@ -116,12 +116,12 @@ export const GardenSetup: React.FC = () => {
                       key={type.id}
                       className={`p-3 rounded-lg border-2 cursor-pointer transition-all duration-200 ${
                         containerSpecs.type === type.id
-                          ? 'border-midnight-blue bg-blush bg-opacity-20'
+                          ? 'border-midnight-800 bg-midnight-50/80'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                       onClick={() => setContainerSpecs({ ...containerSpecs, type: type.id as any })}
                     >
-                      <h4 className="font-medium text-midnight-blue mb-1">{type.name}</h4>
+                      <h4 className="font-medium text-midnight-900 mb-1">{type.name}</h4>
                       <p className="text-xs text-gray-600">{type.description}</p>
                     </div>
                   ))}
@@ -188,7 +188,7 @@ export const GardenSetup: React.FC = () => {
                 onClick={() => toggleFlowerType(flower)}
                 className={`p-3 rounded-lg border-2 text-sm font-medium transition-all duration-200 ${
                   gardenSetup.flowerTypes.includes(flower)
-                    ? 'border-midnight-blue bg-blush bg-opacity-20 text-midnight-blue'
+                    ? 'border-midnight-800 bg-midnight-50/80 text-midnight-900'
                     : 'border-gray-200 text-gray-700 hover:border-gray-300'
                 }`}
               >
@@ -220,33 +220,33 @@ export const GardenSetup: React.FC = () => {
                 onClick={() => handleSeasonGoalChange('1000')}
                 className={`p-4 rounded-lg border-2 text-center transition-all duration-200 ${
                   gardenSetup.seasonGoal === '1000'
-                    ? 'border-midnight-blue bg-blush bg-opacity-20'
+                    ? 'border-midnight-800 bg-midnight-50/80'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
-                <div className="text-xl font-bold text-midnight-blue">$1,000</div>
+                <div className="text-xl font-display font-semibold text-midnight-900">$1,000</div>
                 <div className="text-sm text-gray-600">Hobby Scale</div>
               </button>
               <button
                 onClick={() => handleSeasonGoalChange('5000')}
                 className={`p-4 rounded-lg border-2 text-center transition-all duration-200 ${
                   gardenSetup.seasonGoal === '5000'
-                    ? 'border-midnight-blue bg-blush bg-opacity-20'
+                    ? 'border-midnight-800 bg-midnight-50/80'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
-                <div className="text-xl font-bold text-midnight-blue">$5,000</div>
+                <div className="text-xl font-display font-semibold text-midnight-900">$5,000</div>
                 <div className="text-sm text-gray-600">Side Business</div>
               </button>
               <button
                 onClick={() => handleSeasonGoalChange('15000')}
                 className={`p-4 rounded-lg border-2 text-center transition-all duration-200 ${
                   gardenSetup.seasonGoal === '15000'
-                    ? 'border-midnight-blue bg-blush bg-opacity-20'
+                    ? 'border-midnight-800 bg-midnight-50/80'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
-                <div className="text-xl font-bold text-midnight-blue">$15,000+</div>
+                <div className="text-xl font-display font-semibold text-midnight-900">$15,000+</div>
                 <div className="text-sm text-gray-600">Full Business</div>
               </button>
             </div>

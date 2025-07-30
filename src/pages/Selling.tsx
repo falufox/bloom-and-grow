@@ -143,36 +143,36 @@ export const Selling: React.FC = () => {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-midnight-blue mb-2">Sales Tracking</h1>
-        <p className="text-gray-600">Monitor your sales and track profitability</p>
+        <h1 className="text-3xl font-display font-light text-midnight-900 mb-2">Sales Tracking</h1>
+        <p className="text-cool-600">Monitor your sales and track profitability</p>
       </div>
 
       {/* Sales Summary */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card>
           <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-midnight-blue mb-2">${totalRevenue}</div>
-            <div className="text-sm text-gray-600">Total Revenue</div>
+            <div className="text-3xl font-display font-semibold text-midnight-900 mb-2">${totalRevenue}</div>
+            <div className="text-sm text-cool-600">Total Revenue</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-midnight-blue mb-2">{sales.length}</div>
-            <div className="text-sm text-gray-600">Total Sales</div>
+            <div className="text-3xl font-display font-semibold text-midnight-900 mb-2">{sales.length}</div>
+            <div className="text-sm text-cool-600">Total Sales</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-midnight-blue mb-2">${avgSaleAmount.toFixed(0)}</div>
-            <div className="text-sm text-gray-600">Avg Sale</div>
+            <div className="text-3xl font-display font-semibold text-midnight-900 mb-2">${avgSaleAmount.toFixed(0)}</div>
+            <div className="text-sm text-cool-600">Avg Sale</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
-            <div className="text-xl font-bold text-midnight-blue mb-2">
+            <div className="text-xl font-display font-semibold text-midnight-900 mb-2">
               {topVenue ? venueLabels[topVenue[0] as keyof typeof venueLabels] : 'N/A'}
             </div>
-            <div className="text-sm text-gray-600">Top Venue</div>
+            <div className="text-sm text-cool-600">Top Venue</div>
           </CardContent>
         </Card>
       </div>
@@ -180,7 +180,7 @@ export const Selling: React.FC = () => {
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Button onClick={() => setShowAddForm(true)} className="h-16">
-          <Plus className="w-5 h-5 mr-2" />
+          <Plus className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
           Manual Sale Entry
         </Button>
         <Button 
@@ -189,15 +189,15 @@ export const Selling: React.FC = () => {
           className="h-16"
           disabled={!posConnected}
         >
-          <Smartphone className="w-5 h-5 mr-2" />
+          <Smartphone className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
           Quick POS Sale
         </Button>
         <Button onClick={syncPOSData} variant="outline" className="h-16">
-          {posConnected ? <Wifi className="w-5 h-5 mr-2" /> : <WifiOff className="w-5 h-5 mr-2" />}
+          {posConnected ? <Wifi className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} /> : <WifiOff className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />}
           Sync POS Data
         </Button>
         <Button variant="outline" className="h-16">
-          <Receipt className="w-5 h-5 mr-2" />
+          <Receipt className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
           Generate Report
         </Button>
       </div>
@@ -206,14 +206,14 @@ export const Selling: React.FC = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            <MoneyBagsIcon className="w-5 h-5 mr-2" />
+            <MoneyBagsIcon className="w-3.5 h-3.5 mr-2" />
             Recent Sales
           </CardTitle>
         </CardHeader>
         <CardContent>
           {showAddForm && (
-            <div className="mb-6 p-4 bg-champagne rounded-lg">
-              <h3 className="font-semibold text-midnight-blue mb-4">Record New Sale</h3>
+            <div className="mb-6 p-4 bg-midnight-50/70 rounded-lg">
+              <h3 className="font-semibold text-midnight-900 mb-4">Record New Sale</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <Input
                   label="Customer Name"
@@ -222,11 +222,11 @@ export const Selling: React.FC = () => {
                   placeholder="Customer or business name"
                 />
                 <div>
-                  <label className="block text-sm font-medium text-midnight-blue mb-1">Venue</label>
+                  <label className="block text-sm font-medium text-midnight-900 mb-1">Venue</label>
                   <select
                     value={newSale.venue}
                     onChange={(e) => setNewSale({ ...newSale, venue: e.target.value as Sale['venue'] })}
-                    className="block w-full rounded-lg border-gray-300 bg-white px-3 py-2 text-midnight-blue shadow-sm focus:border-midnight-blue focus:outline-none focus:ring-1 focus:ring-midnight-blue"
+                    className="block w-full rounded-lg border-cool-300 bg-white px-3 py-2 text-midnight-900 shadow-sm focus:border-midnight-blue focus:outline-none focus:ring-1 focus:ring-midnight-blue"
                   >
                     <option value="farmers-market">Farmers Market</option>
                     <option value="csa">CSA</option>
@@ -239,9 +239,9 @@ export const Selling: React.FC = () => {
               {/* Sale Items */}
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-2">
-                  <label className="block text-sm font-medium text-midnight-blue">Items Sold</label>
-                  <div className="flex items-center space-x-2 text-sm text-gray-600">
-                    <Calculator className="w-4 h-4" />
+                  <label className="block text-sm font-medium text-midnight-900">Items Sold</label>
+                  <div className="flex items-center space-x-2 text-sm text-cool-600">
+                    <Calculator className="w-3.5 h-3.5" strokeWidth={1.5} />
                     <span>Total: ${calculateTotal().toFixed(2)}</span>
                   </div>
                 </div>
@@ -252,7 +252,7 @@ export const Selling: React.FC = () => {
                         <select 
                           value={item.type}
                           onChange={(e) => updateSaleItem(index, 'type', e.target.value)}
-                          className="w-full text-sm rounded border-gray-300 px-2 py-1"
+                          className="w-full text-sm rounded border-cool-300 px-2 py-1"
                         >
                           <option value="bouquet">Bouquet</option>
                           <option value="stems">Stems</option>
@@ -280,7 +280,7 @@ export const Selling: React.FC = () => {
                         value={item.price}
                         onChange={(e) => updateSaleItem(index, 'price', e.target.value)}
                       />
-                      <div className="text-sm font-medium text-midnight-blue px-2">
+                      <div className="text-sm font-medium text-midnight-900 px-2">
                         ${((parseInt(item.quantity) || 0) * (parseFloat(item.price) || 0)).toFixed(2)}
                       </div>
                       <Button 
@@ -290,12 +290,12 @@ export const Selling: React.FC = () => {
                         disabled={newSale.items.length === 1}
                         className="p-1"
                       >
-                        <Trash2 className="w-4 h-4 text-red-500" />
+                        <Trash2 className="w-3.5 h-3.5 text-red-500" strokeWidth={1.5} />
                       </Button>
                     </div>
                   ))}
                   <Button variant="ghost" size="sm" onClick={addSaleItem}>
-                    <Plus className="w-4 h-4 mr-1" />
+                    <Plus className="w-3.5 h-3.5 mr-1" strokeWidth={1.5} />
                     Add Item
                   </Button>
                 </div>
@@ -303,11 +303,11 @@ export const Selling: React.FC = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-sm font-medium text-midnight-blue mb-1">Payment Method</label>
+                  <label className="block text-sm font-medium text-midnight-900 mb-1">Payment Method</label>
                   <select
                     value={newSale.paymentMethod}
                     onChange={(e) => setNewSale({ ...newSale, paymentMethod: e.target.value })}
-                    className="block w-full rounded-lg border-gray-300 bg-white px-3 py-2 text-midnight-blue shadow-sm focus:border-midnight-blue focus:outline-none focus:ring-1 focus:ring-midnight-blue"
+                    className="block w-full rounded-lg border-cool-300 bg-white px-3 py-2 text-midnight-900 shadow-sm focus:border-midnight-blue focus:outline-none focus:ring-1 focus:ring-midnight-blue"
                   >
                     <option value="cash">Cash</option>
                     <option value="card">Credit/Debit Card</option>
@@ -319,7 +319,7 @@ export const Selling: React.FC = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-midnight-blue mb-1">Total Amount</label>
+                  <label className="block text-sm font-medium text-midnight-900 mb-1">Total Amount</label>
                   <div className="flex items-center space-x-2">
                     <Input
                       type="number"
@@ -328,7 +328,7 @@ export const Selling: React.FC = () => {
                       readOnly
                       className="bg-gray-50"
                     />
-                    <span className="text-sm text-gray-500">(auto-calculated)</span>
+                    <span className="text-sm text-cool-500">(auto-calculated)</span>
                   </div>
                 </div>
               </div>
@@ -342,27 +342,27 @@ export const Selling: React.FC = () => {
 
           <div className="space-y-4">
             {sales.map(sale => (
-              <div key={sale.id} className="p-4 border border-gray-200 rounded-lg">
+              <div key={sale.id} className="p-4 border border-cool-200 rounded-lg">
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <div className="flex items-center space-x-3 mb-1">
-                      <h3 className="font-semibold text-midnight-blue">{sale.customer}</h3>
+                      <h3 className="font-semibold text-midnight-900">{sale.customer}</h3>
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${venueColors[sale.venue]}`}>
                         {venueLabels[sale.venue]}
                       </span>
                     </div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-cool-600">
                       {new Date(sale.date).toLocaleDateString()} • {sale.paymentMethod}
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-xl font-bold text-midnight-blue">${sale.total}</div>
+                    <div className="text-xl font-bold text-midnight-900">${sale.total}</div>
                   </div>
                 </div>
                 
                 <div className="space-y-2">
                   {sale.items.map(item => (
-                    <div key={item.id} className="flex justify-between text-sm p-2 bg-champagne rounded">
+                    <div key={item.id} className="flex justify-between text-sm p-2 bg-midnight-50/70 rounded">
                       <span>
                         {item.bouquetName || item.variety} ({item.type})
                       </span>
@@ -380,7 +380,7 @@ export const Selling: React.FC = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            <MapPin className="w-5 h-5 mr-2" />
+            <MapPin className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
             Sales by Venue
           </CardTitle>
         </CardHeader>
@@ -393,10 +393,10 @@ export const Selling: React.FC = () => {
               const venueCount = sales.filter(sale => sale.venue === venue).length;
               
               return (
-                <div key={venue} className="text-center p-4 bg-champagne rounded-lg">
-                  <div className="text-2xl font-bold text-midnight-blue mb-1">${venueRevenue}</div>
-                  <div className="text-sm font-medium text-gray-700">{label}</div>
-                  <div className="text-xs text-gray-500">{venueCount} sales</div>
+                <div key={venue} className="text-center p-4 bg-midnight-50/70 rounded-lg">
+                  <div className="text-2xl font-bold text-midnight-900 mb-1">${venueRevenue}</div>
+                  <div className="text-sm font-medium text-cool-700">{label}</div>
+                  <div className="text-xs text-cool-500">{venueCount} sales</div>
                 </div>
               );
             })}
@@ -408,30 +408,30 @@ export const Selling: React.FC = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            <TrendingUp className="w-5 h-5 mr-2" />
+            <TrendingUp className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
             Best Sellers
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            <div className="flex items-center justify-between p-3 bg-champagne rounded-lg">
+            <div className="flex items-center justify-between p-3 bg-midnight-50/70 rounded-lg">
               <div>
-                <div className="font-semibold text-midnight-blue">Summer Sunshine Bouquet</div>
-                <div className="text-sm text-gray-600">8 sold • $15 avg price</div>
+                <div className="font-semibold text-midnight-900">Summer Sunshine Bouquet</div>
+                <div className="text-sm text-cool-600">8 sold • $15 avg price</div>
               </div>
               <div className="text-right">
-                <div className="font-bold text-midnight-blue">$120</div>
-                <div className="text-sm text-gray-600">Total Revenue</div>
+                <div className="font-bold text-midnight-900">$120</div>
+                <div className="text-sm text-cool-600">Total Revenue</div>
               </div>
             </div>
-            <div className="flex items-center justify-between p-3 bg-champagne rounded-lg">
+            <div className="flex items-center justify-between p-3 bg-midnight-50/70 rounded-lg">
               <div>
-                <div className="font-semibold text-midnight-blue">Sunflower Stems</div>
-                <div className="text-sm text-gray-600">24 sold • $1.50 avg price</div>
+                <div className="font-semibold text-midnight-900">Sunflower Stems</div>
+                <div className="text-sm text-cool-600">24 sold • $1.50 avg price</div>
               </div>
               <div className="text-right">
-                <div className="font-bold text-midnight-blue">$36</div>
-                <div className="text-sm text-gray-600">Total Revenue</div>
+                <div className="font-bold text-midnight-900">$36</div>
+                <div className="text-sm text-cool-600">Total Revenue</div>
               </div>
             </div>
           </div>
@@ -444,7 +444,7 @@ export const Selling: React.FC = () => {
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <span className="flex items-center">
-                <Smartphone className="w-5 h-5 mr-2" />
+                <Smartphone className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
                 Quick POS Sale
               </span>
               <Button variant="ghost" size="sm" onClick={() => setShowPOSForm(false)}>×</Button>
@@ -453,9 +453,9 @@ export const Selling: React.FC = () => {
           <CardContent>
             <div className="bg-white p-4 rounded-lg">
               <div className="text-center mb-4">
-                <h3 className="text-lg font-semibold text-midnight-blue mb-2">Process Payment</h3>
-                <div className="text-3xl font-bold text-midnight-blue mb-2">${calculateTotal().toFixed(2)}</div>
-                <p className="text-sm text-gray-600">Tap to charge customer</p>
+                <h3 className="text-lg font-semibold text-midnight-900 mb-2">Process Payment</h3>
+                <div className="text-3xl font-bold text-midnight-900 mb-2">${calculateTotal().toFixed(2)}</div>
+                <p className="text-sm text-cool-600">Tap to charge customer</p>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <Button className="h-12">💳 Card Payment</Button>
@@ -471,14 +471,14 @@ export const Selling: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <span className="flex items-center">
-              <CreditCard className="w-5 h-5 mr-2" />
+              <CreditCard className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
               POS System Integration
             </span>
             <div className="flex items-center space-x-2">
               {posConnected ? (
-                <><Wifi className="w-4 h-4 text-green-600" /><span className="text-sm text-green-600">Connected</span></>
+                <><Wifi className="w-3.5 h-3.5 text-green-600" strokeWidth={1.5} /><span className="text-sm text-green-600">Connected</span></>
               ) : (
-                <><WifiOff className="w-4 h-4 text-red-600" /><span className="text-sm text-red-600">Disconnected</span></>
+                <><WifiOff className="w-3.5 h-3.5 text-red-600" /><span className="text-sm text-red-600">Disconnected</span></>
               )}
             </div>
           </CardTitle>
@@ -488,15 +488,15 @@ export const Selling: React.FC = () => {
             <div className={`p-4 border-2 rounded-lg text-center transition-all ${
               posIntegrations.square.connected 
                 ? 'border-green-300 bg-green-50' 
-                : 'border-dashed border-gray-300'
+                : 'border-dashed border-cool-300'
             }`}>
               <div className="mb-3">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg mx-auto flex items-center justify-center mb-2">
-                  <CreditCard className="w-6 h-6 text-blue-600" />
+                  <CreditCard className="w-3.5 h-3.5 text-blue-600" strokeWidth={1.5} />
                 </div>
-                <h3 className="font-semibold text-midnight-blue">Square</h3>
+                <h3 className="font-semibold text-midnight-900">Square</h3>
               </div>
-              <p className="text-sm text-gray-600 mb-3">
+              <p className="text-sm text-cool-600 mb-3">
                 {posIntegrations.square.connected 
                   ? 'Auto-sync sales data from Square terminals'
                   : 'Connect your Square account to automatically import sales'
@@ -514,15 +514,15 @@ export const Selling: React.FC = () => {
             <div className={`p-4 border-2 rounded-lg text-center transition-all ${
               posIntegrations.stripe.connected 
                 ? 'border-green-300 bg-green-50' 
-                : 'border-dashed border-gray-300'
+                : 'border-dashed border-cool-300'
             }`}>
               <div className="mb-3">
                 <div className="w-12 h-12 bg-purple-100 rounded-lg mx-auto flex items-center justify-center mb-2">
-                  <CreditCard className="w-6 h-6 text-purple-600" />
+                  <CreditCard className="w-3.5 h-3.5 text-purple-600" strokeWidth={1.5} />
                 </div>
-                <h3 className="font-semibold text-midnight-blue">Stripe</h3>
+                <h3 className="font-semibold text-midnight-900">Stripe</h3>
               </div>
-              <p className="text-sm text-gray-600 mb-3">
+              <p className="text-sm text-cool-600 mb-3">
                 {posIntegrations.stripe.connected 
                   ? 'Tracking online and in-person sales'
                   : 'Connect your Stripe account for online sales tracking'
@@ -540,15 +540,15 @@ export const Selling: React.FC = () => {
             <div className={`p-4 border-2 rounded-lg text-center transition-all ${
               posIntegrations.paypal.connected 
                 ? 'border-green-300 bg-green-50' 
-                : 'border-dashed border-gray-300'
+                : 'border-dashed border-cool-300'
             }`}>
               <div className="mb-3">
                 <div className="w-12 h-12 bg-yellow-100 rounded-lg mx-auto flex items-center justify-center mb-2">
-                  <CreditCard className="w-6 h-6 text-yellow-600" />
+                  <CreditCard className="w-3.5 h-3.5 text-yellow-600" strokeWidth={1.5} />
                 </div>
-                <h3 className="font-semibold text-midnight-blue">PayPal</h3>
+                <h3 className="font-semibold text-midnight-900">PayPal</h3>
               </div>
-              <p className="text-sm text-gray-600 mb-3">
+              <p className="text-sm text-cool-600 mb-3">
                 {posIntegrations.paypal.connected 
                   ? 'Syncing PayPal transactions'
                   : 'Connect PayPal for mobile payments and online orders'
@@ -564,9 +564,9 @@ export const Selling: React.FC = () => {
             </div>
           </div>
           
-          <div className="mt-6 p-4 bg-champagne rounded-lg">
-            <h4 className="font-semibold text-midnight-blue mb-2">Integration Benefits</h4>
-            <ul className="text-sm text-gray-700 space-y-1">
+          <div className="mt-6 p-4 bg-midnight-50/70 rounded-lg">
+            <h4 className="font-semibold text-midnight-900 mb-2">Integration Benefits</h4>
+            <ul className="text-sm text-cool-700 space-y-1">
               <li>• Automatic sale recording from your POS system</li>
               <li>• Real-time inventory tracking</li>
               <li>• Consolidated reporting across all sales channels</li>

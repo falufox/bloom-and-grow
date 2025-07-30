@@ -92,8 +92,8 @@ export const Planning: React.FC = () => {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-midnight-blue mb-2">Garden Planning</h1>
-        <p className="text-gray-600">Visualize and organize your flower {isContainerGardening ? 'containers' : 'beds'}</p>
+        <h1 className="text-3xl font-display font-light text-midnight-900 mb-2">Garden Planning</h1>
+        <p className="text-cool-600">Visualize and organize your flower {isContainerGardening ? 'containers' : 'beds'}</p>
       </div>
 
       {/* Garden Overview */}
@@ -101,7 +101,7 @@ export const Planning: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <span className="flex items-center">
-              {isContainerGardening ? <Package className="w-5 h-5 mr-2" /> : <RaisedBedIcon className="w-5 h-5 mr-2" />}
+              {isContainerGardening ? <Package className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} /> : <RaisedBedIcon className="w-3.5 h-3.5 mr-2" />}
               {spaceLabel} Layout
             </span>
             <Button
@@ -109,7 +109,7 @@ export const Planning: React.FC = () => {
               size="sm"
               onClick={() => setShowAddSpace(true)}
             >
-              <Plus className="w-4 h-4 mr-1" />
+              <Plus className="w-3.5 h-3.5 mr-1" strokeWidth={1.5} />
               Add {spaceLabel}
             </Button>
           </CardTitle>
@@ -153,12 +153,12 @@ export const Planning: React.FC = () => {
                     </div>
                     
                     {/* Space label */}
-                    <div className="absolute top-2 left-2 bg-white px-2 py-1 rounded text-xs font-medium text-midnight-blue shadow-sm">
+                    <div className="absolute top-2 left-2 bg-white px-2 py-1 rounded text-xs font-medium text-midnight-900 shadow-sm">
                       {space.name}
                     </div>
                     
                     {/* Dimensions */}
-                    <div className="absolute bottom-2 right-2 bg-white px-2 py-1 rounded text-xs text-gray-600 shadow-sm">
+                    <div className="absolute bottom-2 right-2 bg-white px-2 py-1 rounded text-xs text-cool-600 shadow-sm">
                       {space.type === 'container' && space.containerType === 'round'
                         ? `⌀${space.dimensions.diameter}"`
                         : `${space.dimensions.length}" × ${space.dimensions.width}"`
@@ -167,7 +167,7 @@ export const Planning: React.FC = () => {
                     
                     {/* Edit button */}
                     <button className="absolute top-2 right-2 p-1 bg-white rounded shadow-sm hover:bg-gray-50">
-                      <Edit3 className="w-3 h-3 text-gray-600" />
+                      <Edit3 className="w-3 h-3 text-cool-600" strokeWidth={1.5} />
                     </button>
                   </div>
                 </div>
@@ -234,7 +234,7 @@ export const Planning: React.FC = () => {
               <CardTitle className="flex items-center justify-between">
                 <span>{space.name} Details</span>
                 <Button variant="ghost" size="sm">
-                  <Camera className="w-4 h-4 mr-1" />
+                  <Camera className="w-3.5 h-3.5 mr-1" strokeWidth={1.5} />
                   Add Photo
                 </Button>
               </CardTitle>
@@ -243,8 +243,8 @@ export const Planning: React.FC = () => {
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="font-medium text-midnight-blue">Dimensions:</span>
-                    <div className="text-gray-600">
+                    <span className="font-medium text-midnight-900">Dimensions:</span>
+                    <div className="text-cool-600">
                       {space.type === 'container' && space.containerType === 'round'
                         ? `⌀${space.dimensions.diameter}" × ${space.dimensions.height}"H`
                         : `${space.dimensions.length}" × ${space.dimensions.width}"${space.type === 'container' ? ` × ${space.dimensions.height}"H` : ''}`
@@ -252,8 +252,8 @@ export const Planning: React.FC = () => {
                     </div>
                   </div>
                   <div>
-                    <span className="font-medium text-midnight-blue">{space.type === 'container' ? 'Volume:' : 'Area:'}</span>
-                    <div className="text-gray-600">
+                    <span className="font-medium text-midnight-900">{space.type === 'container' ? 'Volume:' : 'Area:'}</span>
+                    <div className="text-cool-600">
                       {space.type === 'container' && space.containerType === 'round'
                         ? `${Math.round(Math.PI * Math.pow(space.dimensions.diameter! / 2, 2) * space.dimensions.height! / 231)} gal`
                         : space.type === 'container'
@@ -265,30 +265,30 @@ export const Planning: React.FC = () => {
                 </div>
                 
                 <div>
-                  <span className="font-medium text-midnight-blue">Planned Flowers:</span>
+                  <span className="font-medium text-midnight-900">Planned Flowers:</span>
                   <div className="mt-2 space-y-2">
                     {space.flowers.length > 0 ? (
                       space.flowers.map((flower, index) => (
-                        <div key={index} className="flex items-center justify-between p-2 bg-champagne rounded">
+                        <div key={index} className="flex items-center justify-between p-2 bg-midnight-50/70 rounded">
                           <div className="flex items-center space-x-2">
                             <div
-                              className="w-4 h-4 rounded-full"
+                              className="w-3.5 h-3.5 rounded-full"
                               style={{ backgroundColor: flower.color }}
                             />
                             <span className="text-sm">{flower.name}</span>
-                            {flower.variety && <span className="text-xs text-gray-500">({flower.variety})</span>}
+                            {flower.variety && <span className="text-xs text-cool-500">({flower.variety})</span>}
                           </div>
-                          <span className="text-sm text-gray-600">{flower.quantity} plants</span>
+                          <span className="text-sm text-cool-600">{flower.quantity} plants</span>
                         </div>
                       ))
                     ) : (
-                      <div className="text-gray-500 text-sm italic">No flowers planned yet</div>
+                      <div className="text-cool-500 text-sm italic">No flowers planned yet</div>
                     )}
                   </div>
                 </div>
                 
                 <Button variant="outline" size="sm" className="w-full">
-                  <Plus className="w-4 h-4 mr-1" />
+                  <Plus className="w-3.5 h-3.5 mr-1" strokeWidth={1.5} />
                   Add Flowers
                 </Button>
               </div>
@@ -305,11 +305,11 @@ export const Planning: React.FC = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
-              <div className="text-2xl font-bold text-midnight-blue">{plantingSpaces.length}</div>
-              <div className="text-sm text-gray-600">Total {spaceLabel}s</div>
+              <div className="text-2xl font-display font-semibold text-midnight-900">{plantingSpaces.length}</div>
+              <div className="text-sm text-cool-600">Total {spaceLabel}s</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-midnight-blue">
+              <div className="text-2xl font-display font-semibold text-midnight-900">
                 {isContainerGardening 
                   ? plantingSpaces.reduce((total, space) => 
                       total + (space.containerType === 'round' 
@@ -320,13 +320,13 @@ export const Planning: React.FC = () => {
                   : plantingSpaces.reduce((total, space) => total + (space.dimensions.length! * space.dimensions.width!), 0)
                 }
               </div>
-              <div className="text-sm text-gray-600">Total {isContainerGardening ? 'Gallons' : 'Square Feet'}</div>
+              <div className="text-sm text-cool-600">Total {isContainerGardening ? 'Gallons' : 'Square Feet'}</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-midnight-blue">
+              <div className="text-2xl font-display font-semibold text-midnight-900">
                 {plantingSpaces.reduce((total, space) => total + space.flowers.reduce((sum, flower) => sum + flower.quantity, 0), 0)}
               </div>
-              <div className="text-sm text-gray-600">Total Plants Planned</div>
+              <div className="text-sm text-cool-600">Total Plants Planned</div>
             </div>
           </div>
         </CardContent>

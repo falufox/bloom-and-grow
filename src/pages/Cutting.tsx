@@ -137,38 +137,38 @@ export const Cutting: React.FC = () => {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-midnight-blue mb-2">Cutting & Harvest</h1>
-        <p className="text-gray-600">Track your flower harvests and plan bouquets</p>
+        <h1 className="text-3xl font-display font-light text-midnight-900 mb-2">Cutting & Harvest</h1>
+        <p className="text-cool-600">Track your flower harvests and plan bouquets</p>
       </div>
 
       {/* Harvest Summary */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card>
           <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-midnight-blue mb-2">{totalStems}</div>
-            <div className="text-sm text-gray-600">Total Stems</div>
+            <div className="text-3xl font-display font-semibold text-midnight-900 mb-2">{totalStems}</div>
+            <div className="text-sm text-cool-600">Total Stems</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-midnight-blue mb-2">
+            <div className="text-3xl font-display font-semibold text-midnight-900 mb-2">
               {harvests.filter(h => h.quality === 'premium').reduce((sum, h) => sum + h.stemCount, 0)}
             </div>
-            <div className="text-sm text-gray-600">Premium Stems</div>
+            <div className="text-sm text-cool-600">Premium Stems</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-midnight-blue mb-2">${totalValue.toFixed(0)}</div>
-            <div className="text-sm text-gray-600">Estimated Value</div>
+            <div className="text-3xl font-display font-semibold text-midnight-900 mb-2">${totalValue.toFixed(0)}</div>
+            <div className="text-sm text-cool-600">Estimated Value</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-midnight-blue mb-2">
+            <div className="text-3xl font-display font-semibold text-midnight-900 mb-2">
               {Math.max(...bouquetRecipes.map(recipe => calculateBouquets(recipe)))}
             </div>
-            <div className="text-sm text-gray-600">Max Bouquets</div>
+            <div className="text-sm text-cool-600">Max Bouquets</div>
           </CardContent>
         </Card>
       </div>
@@ -178,19 +178,19 @@ export const Cutting: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <span className="flex items-center">
-              <GardenShearsIcon className="w-5 h-5 mr-2" />
+              <GardenShearsIcon className="w-3.5 h-3.5 mr-2" />
               Harvest Log
             </span>
             <Button onClick={() => setShowAddForm(true)}>
-              <Plus className="w-4 h-4 mr-1" />
+              <Plus className="w-3.5 h-3.5 mr-1" strokeWidth={1.5} />
               Log Harvest
             </Button>
           </CardTitle>
         </CardHeader>
         <CardContent>
           {showAddForm && (
-            <div className="mb-6 p-4 bg-champagne rounded-lg">
-              <h3 className="font-semibold text-midnight-blue mb-4">Record New Harvest</h3>
+            <div className="mb-6 p-4 bg-midnight-50/70 rounded-lg">
+              <h3 className="font-semibold text-midnight-900 mb-4">Record New Harvest</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <Input
                   label="Flower Variety"
@@ -206,11 +206,11 @@ export const Cutting: React.FC = () => {
                   placeholder="15"
                 />
                 <div>
-                  <label className="block text-sm font-medium text-midnight-blue mb-1">Quality</label>
+                  <label className="block text-sm font-medium text-midnight-900 mb-1">Quality</label>
                   <select
                     value={newHarvest.quality}
                     onChange={(e) => setNewHarvest({ ...newHarvest, quality: e.target.value as any })}
-                    className="block w-full rounded-lg border-gray-300 bg-white px-3 py-2 text-midnight-blue shadow-sm focus:border-midnight-blue focus:outline-none focus:ring-1 focus:ring-midnight-blue"
+                    className="block w-full rounded-lg border-cool-300 bg-white px-3 py-2 text-midnight-900 shadow-sm focus:border-midnight-blue focus:outline-none focus:ring-1 focus:ring-midnight-blue"
                   >
                     <option value="premium">Premium</option>
                     <option value="good">Good</option>
@@ -218,11 +218,11 @@ export const Cutting: React.FC = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-midnight-blue mb-1">{spaceLabel}</label>
+                  <label className="block text-sm font-medium text-midnight-900 mb-1">{spaceLabel}</label>
                   <select
                     value={newHarvest.spaceId}
                     onChange={(e) => setNewHarvest({ ...newHarvest, spaceId: e.target.value })}
-                    className="block w-full rounded-lg border-gray-300 bg-white px-3 py-2 text-midnight-blue shadow-sm focus:border-midnight-blue focus:outline-none focus:ring-1 focus:ring-midnight-blue"
+                    className="block w-full rounded-lg border-cool-300 bg-white px-3 py-2 text-midnight-900 shadow-sm focus:border-midnight-blue focus:outline-none focus:ring-1 focus:ring-midnight-blue"
                   >
                     <option value="">Select a {spaceLabel.toLowerCase()}</option>
                     {plantingSpaces.map(space => (
@@ -248,16 +248,16 @@ export const Cutting: React.FC = () => {
           {/* Recent Harvests */}
           <div className="space-y-4">
             {harvests.map(harvest => (
-              <div key={harvest.id} className="p-4 border border-gray-200 rounded-lg">
+              <div key={harvest.id} className="p-4 border border-cool-200 rounded-lg">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
-                      <h3 className="font-semibold text-midnight-blue">{harvest.variety}</h3>
+                      <h3 className="font-semibold text-midnight-900">{harvest.variety}</h3>
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${qualityColors[harvest.quality]}`}>
                         {harvest.quality}
                       </span>
                     </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600 mb-2">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-cool-600 mb-2">
                       <div>
                         <span className="font-medium">Date:</span> {new Date(harvest.date).toLocaleDateString()}
                       </div>
@@ -273,7 +273,7 @@ export const Cutting: React.FC = () => {
                       </div>
                     </div>
                     {harvest.notes && (
-                      <p className="text-sm text-gray-600 italic">{harvest.notes}</p>
+                      <p className="text-sm text-cool-600 italic">{harvest.notes}</p>
                     )}
                   </div>
                 </div>
@@ -287,7 +287,7 @@ export const Cutting: React.FC = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            <Package className="w-5 h-5 mr-2" />
+            <Package className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
             Bouquet Calculator
           </CardTitle>
         </CardHeader>
@@ -299,13 +299,13 @@ export const Cutting: React.FC = () => {
               const wholesaleValue = possibleBouquets * recipe.wholesalePrice;
               
               return (
-                <div key={recipe.id} className="p-4 border border-gray-200 rounded-lg">
-                  <h3 className="font-semibold text-midnight-blue mb-3">{recipe.name}</h3>
+                <div key={recipe.id} className="p-4 border border-cool-200 rounded-lg">
+                  <h3 className="font-semibold text-midnight-900 mb-3">{recipe.name}</h3>
                   
                   <div className="space-y-2 mb-4">
-                    <div className="text-sm font-medium text-gray-700">Recipe:</div>
+                    <div className="text-sm font-medium text-cool-700">Recipe:</div>
                     {Object.entries(recipe.stemCounts).map(([variety, count]) => (
-                      <div key={variety} className="text-sm text-gray-600 flex justify-between">
+                      <div key={variety} className="text-sm text-cool-600 flex justify-between">
                         <span>{variety}</span>
                         <span>{count} stems</span>
                       </div>
@@ -315,12 +315,12 @@ export const Cutting: React.FC = () => {
                   <div className="border-t pt-3">
                     <div className="grid grid-cols-2 gap-4 text-center">
                       <div>
-                        <div className="text-2xl font-bold text-midnight-blue">{possibleBouquets}</div>
-                        <div className="text-xs text-gray-600">Possible Bouquets</div>
+                        <div className="text-2xl font-bold text-midnight-900">{possibleBouquets}</div>
+                        <div className="text-xs text-cool-600">Possible Bouquets</div>
                       </div>
                       <div>
-                        <div className="text-lg font-semibold text-midnight-blue">${retailValue}</div>
-                        <div className="text-xs text-gray-600">Retail Value</div>
+                        <div className="text-lg font-semibold text-midnight-900">${retailValue}</div>
+                        <div className="text-xs text-cool-600">Retail Value</div>
                         <div className="text-sm text-gray-500">${wholesaleValue} wholesale</div>
                       </div>
                     </div>
@@ -336,30 +336,30 @@ export const Cutting: React.FC = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            <DollarSign className="w-5 h-5 mr-2" />
+            <DollarSign className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
             Pricing Suggestions
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center p-4 bg-champagne rounded-lg">
-              <h4 className="font-semibold text-midnight-blue mb-2">Individual Stems</h4>
+            <div className="text-center p-4 bg-midnight-50/70 rounded-lg">
+              <h4 className="font-semibold text-midnight-900 mb-2">Individual Stems</h4>
               <div className="space-y-1 text-sm">
                 <div>Premium: $1.50-2.00</div>
                 <div>Good: $1.00-1.50</div>
                 <div>Fair: $0.70-1.00</div>
               </div>
             </div>
-            <div className="text-center p-4 bg-champagne rounded-lg">
-              <h4 className="font-semibold text-midnight-blue mb-2">Farmers Market</h4>
+            <div className="text-center p-4 bg-midnight-50/70 rounded-lg">
+              <h4 className="font-semibold text-midnight-900 mb-2">Farmers Market</h4>
               <div className="space-y-1 text-sm">
                 <div>Small bouquet: $8-12</div>
                 <div>Large bouquet: $15-25</div>
                 <div>Specialty: $20-35</div>
               </div>
             </div>
-            <div className="text-center p-4 bg-champagne rounded-lg">
-              <h4 className="font-semibold text-midnight-blue mb-2">Wholesale</h4>
+            <div className="text-center p-4 bg-midnight-50/70 rounded-lg">
+              <h4 className="font-semibold text-midnight-900 mb-2">Wholesale</h4>
               <div className="space-y-1 text-sm">
                 <div>Buckets: $15-30</div>
                 <div>Arranged: 50-60% retail</div>

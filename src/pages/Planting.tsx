@@ -100,36 +100,36 @@ export const Planting: React.FC = () => {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-midnight-blue mb-2">Planting Tracker</h1>
-        <p className="text-gray-600">Record and monitor your plantings</p>
+        <h1 className="text-3xl font-display font-light text-midnight-900 mb-2">Planting Tracker</h1>
+        <p className="text-cool-600">Record and monitor your plantings</p>
       </div>
 
       {/* Current Conditions */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardContent className="p-4 text-center">
-            <Thermometer className="w-8 h-8 text-midnight-blue mx-auto mb-2" />
-            <div className="text-xl font-bold text-midnight-blue">{currentWeather.temp}°F</div>
-            <div className="text-sm text-gray-600">Air Temp</div>
+            <Thermometer className="w-3.5 h-3.5 text-midnight-900 mx-auto mb-2" strokeWidth={1.5} />
+            <div className="text-xl font-display font-semibold text-midnight-900">{currentWeather.temp}°F</div>
+            <div className="text-sm text-cool-600">Air Temp</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <Cloud className="w-8 h-8 text-midnight-blue mx-auto mb-2" />
-            <div className="text-xl font-bold text-midnight-blue">{currentWeather.soilTemp}°F</div>
-            <div className="text-sm text-gray-600">Soil Temp</div>
+            <Cloud className="w-3.5 h-3.5 text-midnight-900 mx-auto mb-2" strokeWidth={1.5} />
+            <div className="text-xl font-display font-semibold text-midnight-900">{currentWeather.soilTemp}°F</div>
+            <div className="text-sm text-cool-600">Soil Temp</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-xl font-bold text-midnight-blue">{currentWeather.humidity}%</div>
-            <div className="text-sm text-gray-600">Humidity</div>
+            <div className="text-xl font-display font-semibold text-midnight-900">{currentWeather.humidity}%</div>
+            <div className="text-sm text-cool-600">Humidity</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-sm font-medium text-midnight-blue">{currentWeather.condition}</div>
-            <div className="text-xs text-gray-600">Conditions</div>
+            <div className="text-sm font-medium text-midnight-900">{currentWeather.condition}</div>
+            <div className="text-xs text-cool-600">Conditions</div>
           </CardContent>
         </Card>
       </div>
@@ -158,15 +158,15 @@ export const Planting: React.FC = () => {
           <CardTitle className="flex items-center justify-between">
             <span>Planting Log</span>
             <Button onClick={() => setShowAddForm(true)}>
-              <Plus className="w-4 h-4 mr-1" />
+              <Plus className="w-3.5 h-3.5 mr-1" strokeWidth={1.5} />
               Log Planting
             </Button>
           </CardTitle>
         </CardHeader>
         <CardContent>
           {showAddForm && (
-            <div className="mb-6 p-4 bg-champagne rounded-lg">
-              <h3 className="font-semibold text-midnight-blue mb-4">Record New Planting</h3>
+            <div className="mb-6 p-4 bg-midnight-50/70 rounded-lg">
+              <h3 className="font-semibold text-midnight-900 mb-4">Record New Planting</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div className="relative">
                   <Input
@@ -175,7 +175,7 @@ export const Planting: React.FC = () => {
                     onChange={(e) => setNewPlanting({ ...newPlanting, flower: e.target.value })}
                     placeholder="e.g., Sunflower"
                   />
-                  <Flower2 className="w-4 h-4 absolute right-3 top-8 text-gray-400" />
+                  <Flower2 className="w-3.5 h-3.5 absolute right-3 top-8 text-cool-400" strokeWidth={1.5} />
                 </div>
                 <Input
                   label="Variety"
@@ -184,11 +184,11 @@ export const Planting: React.FC = () => {
                   placeholder="e.g., Mammoth"
                 />
                 <div>
-                  <label className="block text-sm font-medium text-midnight-blue mb-1">{spaceLabel}</label>
+                  <label className="block text-sm font-medium text-midnight-900 mb-1">{spaceLabel}</label>
                   <select
                     value={newPlanting.spaceId}
                     onChange={(e) => setNewPlanting({ ...newPlanting, spaceId: e.target.value })}
-                    className="block w-full rounded-lg border-gray-300 bg-white px-3 py-2 text-midnight-blue shadow-sm focus:border-midnight-blue focus:outline-none focus:ring-1 focus:ring-midnight-blue"
+                    className="block w-full rounded-lg border-cool-300 bg-white px-3 py-2 text-midnight-900 shadow-sm focus:border-midnight-900 focus:outline-none focus:ring-1 focus:ring-midnight-900"
                   >
                     <option value="">Select a {spaceLabel.toLowerCase()}</option>
                     {plantingSpaces.map(space => (
@@ -211,15 +211,15 @@ export const Planting: React.FC = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-midnight-blue mb-2">
-                  <FileText className="w-4 h-4 inline mr-1" />
+                <label className="block text-sm font-medium text-midnight-900 mb-2">
+                  <FileText className="w-3.5 h-3.5 inline mr-1" strokeWidth={1.5} />
                   Notes (for future reference)
                 </label>
                 <textarea
                   value={newPlanting.notes}
                   onChange={(e) => setNewPlanting({ ...newPlanting, notes: e.target.value })}
                   placeholder="Record planting method, soil conditions, weather, special observations, or any tips for next season..."
-                  className="block w-full rounded-lg border-gray-300 bg-white px-3 py-2 text-midnight-blue shadow-sm focus:border-midnight-blue focus:outline-none focus:ring-1 focus:ring-midnight-blue min-h-[80px] resize-y"
+                  className="block w-full rounded-lg border-cool-300 bg-white px-3 py-2 text-midnight-900 shadow-sm focus:border-midnight-900 focus:outline-none focus:ring-1 focus:ring-midnight-900 min-h-[80px] resize-y"
                 />
               </div>
               <div className="flex space-x-2">
@@ -232,16 +232,16 @@ export const Planting: React.FC = () => {
           {/* Planting History */}
           <div className="space-y-4">
             {plantings.map(planting => (
-              <div key={planting.id} className="p-4 border border-gray-200 rounded-lg">
+              <div key={planting.id} className="p-4 border border-cool-200 rounded-lg">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
-                      <h3 className="font-semibold text-midnight-blue">{planting.flower} - {planting.variety}</h3>
+                      <h3 className="font-semibold text-midnight-900">{planting.flower} - {planting.variety}</h3>
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[planting.status]}`}>
                         {planting.status}
                       </span>
                     </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600 mb-2">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-cool-600 mb-2">
                       <div>
                         <span className="font-medium">Date:</span> {new Date(planting.date).toLocaleDateString()}
                       </div>
@@ -256,7 +256,7 @@ export const Planting: React.FC = () => {
                       </div>
                     </div>
                     {planting.notes && (
-                      <p className="text-sm text-gray-600 italic">{planting.notes}</p>
+                      <p className="text-sm text-cool-600 italic">{planting.notes}</p>
                     )}
                   </div>
                   <div className="ml-4 flex flex-col space-y-1">
@@ -281,7 +281,7 @@ export const Planting: React.FC = () => {
                       </Button>
                     )}
                     {planting.status === 'established' && (
-                      <CheckCircle className="w-5 h-5 text-green-600" />
+                      <CheckCircle className="w-3.5 h-3.5 text-green-600" strokeWidth={1.5} />
                     )}
                   </div>
                 </div>
@@ -295,30 +295,30 @@ export const Planting: React.FC = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            <Calendar className="w-5 h-5 mr-2" />
+            <Calendar className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
             Upcoming Plantings
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            <div className="flex items-center justify-between p-3 bg-champagne rounded-lg">
+            <div className="flex items-center justify-between p-3 bg-midnight-50/70 rounded-lg">
               <div>
-                <div className="font-medium text-midnight-blue">Cosmos - Sensation Mix</div>
-                <div className="text-sm text-gray-600">Bed 2 • 36 plants • 8 inch spacing</div>
+                <div className="font-medium text-midnight-900">Cosmos - Sensation Mix</div>
+                <div className="text-sm text-cool-600">Bed 2 • 36 plants • 8 inch spacing</div>
               </div>
               <div className="text-right">
-                <div className="text-sm font-medium text-midnight-blue">March 25</div>
-                <div className="text-xs text-gray-600">5 days</div>
+                <div className="text-sm font-medium text-midnight-900">March 25</div>
+                <div className="text-xs text-cool-600">5 days</div>
               </div>
             </div>
-            <div className="flex items-center justify-between p-3 bg-champagne rounded-lg">
+            <div className="flex items-center justify-between p-3 bg-midnight-50/70 rounded-lg">
               <div>
-                <div className="font-medium text-midnight-blue">Dahlia - Cafe au Lait</div>
-                <div className="text-sm text-gray-600">Bed 3 • 12 tubers • 18 inch spacing</div>
+                <div className="font-medium text-midnight-900">Dahlia - Cafe au Lait</div>
+                <div className="text-sm text-cool-600">Bed 3 • 12 tubers • 18 inch spacing</div>
               </div>
               <div className="text-right">
-                <div className="text-sm font-medium text-midnight-blue">April 1</div>
-                <div className="text-xs text-gray-600">12 days</div>
+                <div className="text-sm font-medium text-midnight-900">April 1</div>
+                <div className="text-xs text-cool-600">12 days</div>
               </div>
             </div>
           </div>
@@ -336,7 +336,7 @@ export const Planting: React.FC = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h4 className="font-semibold text-midnight-blue mb-3">Ideal for Planting:</h4>
+              <h4 className="font-semibold text-midnight-900 mb-3">Ideal for Planting:</h4>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-center text-green-700">
                   <CheckCircle className="w-4 h-4 mr-2" />
@@ -349,7 +349,7 @@ export const Planting: React.FC = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-midnight-blue mb-3">Wait to Plant:</h4>
+              <h4 className="font-semibold text-midnight-900 mb-3">Wait to Plant:</h4>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-center text-amber-700">
                   <Calendar className="w-4 h-4 mr-2" />

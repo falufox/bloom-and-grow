@@ -101,24 +101,24 @@ export const Prepping: React.FC = () => {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-midnight-blue mb-2">{spaceLabel} Preparation</h1>
-        <p className="text-gray-600">Get your {isContainerGardening ? 'containers' : 'beds'} ready for optimal flower growth</p>
+        <h1 className="text-3xl font-display font-light text-midnight-900 mb-2">{spaceLabel} Preparation</h1>
+        <p className="text-cool-600">Get your {isContainerGardening ? 'containers' : 'beds'} ready for optimal flower growth</p>
       </div>
 
       {/* Delightful completion feature */}
       {allTasksCompleted && tasks.length > 0 && (
         <Card className="border-2 border-emerald-300 bg-gradient-to-r from-emerald-50 to-green-50">
           <CardContent className="p-6 text-center">
-            <Trophy className="w-12 h-12 text-emerald-600 mx-auto mb-4 animate-bounce" />
-            <h3 className="text-xl font-bold text-emerald-800 mb-2">🎆 Preparation Complete! 🎆</h3>
+            <Trophy className="w-8 h-8 text-emerald-600 mx-auto mb-4 animate-bounce" strokeWidth={1.5} />
+            <h3 className="text-xl font-display font-semibold text-emerald-800 mb-2">🎆 Preparation Complete! 🎆</h3>
             <p className="text-emerald-700 mb-4">
               Outstanding work! All your {isContainerGardening ? 'containers' : 'beds'} are perfectly prepped and ready for planting.
               Your flowers are going to love their new home!
             </p>
             <div className="flex justify-center items-center space-x-2 text-emerald-600">
-              <Sparkles className="w-5 h-5" />
+              <Sparkles className="w-3.5 h-3.5" strokeWidth={1.5} />
               <span className="font-medium">Time to start planting!</span>
-              <Sparkles className="w-5 h-5" />
+              <Sparkles className="w-3.5 h-3.5" strokeWidth={1.5} />
             </div>
           </CardContent>
         </Card>
@@ -161,13 +161,13 @@ export const Prepping: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card>
           <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-midnight-blue mb-2">
+            <div className="text-3xl font-display font-semibold text-midnight-900 mb-2">
               {tasks.filter(t => t.completed).length}/{tasks.length}
             </div>
-            <div className="text-gray-600">Tasks Completed</div>
+            <div className="text-cool-600">Tasks Completed</div>
             <div className="w-full bg-gray-200 rounded-full h-2 mt-3">
               <div 
-                className="bg-midnight-blue h-2 rounded-full transition-all duration-300"
+                className="bg-midnight-900 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${(tasks.filter(t => t.completed).length / tasks.length) * 100}%` }}
               ></div>
             </div>
@@ -176,16 +176,16 @@ export const Prepping: React.FC = () => {
 
         <Card>
           <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-midnight-blue mb-2">
+            <div className="text-3xl font-display font-semibold text-midnight-900 mb-2">
               {tasks.filter(t => t.priority === 'high' && !t.completed).length}
             </div>
-            <div className="text-gray-600">High Priority Tasks</div>
+            <div className="text-cool-600">High Priority Tasks</div>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-midnight-blue mb-2">
+            <div className="text-3xl font-display font-semibold text-midnight-900 mb-2">
               {tasks.reduce((total, task) => {
                 if (!task.completed) {
                   const time = parseFloat(task.estimatedTime);
@@ -194,7 +194,7 @@ export const Prepping: React.FC = () => {
                 return total;
               }, 0).toFixed(1)}h
             </div>
-            <div className="text-gray-600">Estimated Time Left</div>
+            <div className="text-cool-600">Estimated Time Left</div>
           </CardContent>
         </Card>
       </div>
@@ -223,16 +223,16 @@ export const Prepping: React.FC = () => {
                       className="mt-1 flex-shrink-0"
                     >
                       {task.completed ? (
-                        <CheckCircle2 className="w-6 h-6 text-green-600" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-green-600" strokeWidth={1.5} />
                       ) : (
-                        <Circle className="w-6 h-6 text-gray-400 hover:text-gray-600" />
+                        <Circle className="w-3.5 h-3.5 text-cool-400 hover:text-cool-600" strokeWidth={1.5} />
                       )}
                     </button>
                     
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center space-x-3 mb-2">
                         <h3 className={clsx(
-                          'font-semibold text-midnight-blue',
+                          'font-semibold text-midnight-900',
                           task.completed && 'line-through'
                         )}>
                           {task.task}
@@ -241,15 +241,15 @@ export const Prepping: React.FC = () => {
                           'px-2 py-1 rounded-full text-xs font-medium flex items-center',
                           categoryColors[task.category]
                         )}>
-                          <CategoryIcon className="w-3 h-3 mr-1" />
+                          <CategoryIcon className="w-3.5 h-3.5 mr-1" strokeWidth={1.5} />
                           {task.category}
                         </span>
                       </div>
                       
-                      <p className="text-gray-600 text-sm mb-3">{task.description}</p>
+                      <p className="text-cool-600 text-sm mb-3">{task.description}</p>
                       
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4 text-sm text-gray-500">
+                        <div className="flex items-center space-x-4 text-sm text-cool-500">
                           <span>{spaceLabel}: {plantingSpaces.find(s => s.id === task.spaceId)?.name}</span>
                           <span>Time: {task.estimatedTime}</span>
                           <span className={clsx(
@@ -276,23 +276,23 @@ export const Prepping: React.FC = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center">
-              <Thermometer className="w-5 h-5 mr-2" />
+              <Thermometer className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
               Soil Preparation Guide
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3 text-sm">
-              <div className="p-3 bg-champagne rounded-lg">
-                <div className="font-medium text-midnight-blue mb-1">1. Test Your Soil</div>
-                <div className="text-gray-600">Check pH, nutrients, and drainage before amending</div>
+              <div className="p-3 bg-midnight-50/70 rounded-lg">
+                <div className="font-medium text-midnight-900 mb-1">1. Test Your Soil</div>
+                <div className="text-cool-600">Check pH, nutrients, and drainage before amending</div>
               </div>
-              <div className="p-3 bg-champagne rounded-lg">
-                <div className="font-medium text-midnight-blue mb-1">2. Add Organic Matter</div>
-                <div className="text-gray-600">Mix in 2-3 inches of compost or well-aged manure</div>
+              <div className="p-3 bg-midnight-50/70 rounded-lg">
+                <div className="font-medium text-midnight-900 mb-1">2. Add Organic Matter</div>
+                <div className="text-cool-600">Mix in 2-3 inches of compost or well-aged manure</div>
               </div>
-              <div className="p-3 bg-champagne rounded-lg">
-                <div className="font-medium text-midnight-blue mb-1">3. Adjust pH if Needed</div>
-                <div className="text-gray-600">Most flowers prefer slightly acidic to neutral soil (6.0-7.0)</div>
+              <div className="p-3 bg-midnight-50/70 rounded-lg">
+                <div className="font-medium text-midnight-900 mb-1">3. Adjust pH if Needed</div>
+                <div className="text-cool-600">Most flowers prefer slightly acidic to neutral soil (6.0-7.0)</div>
               </div>
             </div>
           </CardContent>
@@ -301,23 +301,23 @@ export const Prepping: React.FC = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center">
-              <Calendar className="w-5 h-5 mr-2" />
+              <Calendar className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
               Timing Guidelines
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3 text-sm">
-              <div className="p-3 bg-champagne rounded-lg">
-                <div className="font-medium text-midnight-blue mb-1">6-8 Weeks Before Planting</div>
-                <div className="text-gray-600">Test soil, order amendments, plan layout</div>
+              <div className="p-3 bg-midnight-50/70 rounded-lg">
+                <div className="font-medium text-midnight-900 mb-1">6-8 Weeks Before Planting</div>
+                <div className="text-cool-600">Test soil, order amendments, plan layout</div>
               </div>
-              <div className="p-3 bg-champagne rounded-lg">
-                <div className="font-medium text-midnight-blue mb-1">2-4 Weeks Before Planting</div>
-                <div className="text-gray-600">Add compost, install irrigation, prepare structures</div>
+              <div className="p-3 bg-midnight-50/70 rounded-lg">
+                <div className="font-medium text-midnight-900 mb-1">2-4 Weeks Before Planting</div>
+                <div className="text-cool-600">Add compost, install irrigation, prepare structures</div>
               </div>
-              <div className="p-3 bg-champagne rounded-lg">
-                <div className="font-medium text-midnight-blue mb-1">1 Week Before Planting</div>
-                <div className="text-gray-600">Final soil prep, check weather, gather supplies</div>
+              <div className="p-3 bg-midnight-50/70 rounded-lg">
+                <div className="font-medium text-midnight-900 mb-1">1 Week Before Planting</div>
+                <div className="text-cool-600">Final soil prep, check weather, gather supplies</div>
               </div>
             </div>
           </CardContent>

@@ -14,13 +14,13 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   ...props
 }) => {
-  const baseClasses = 'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95';
+  const baseClasses = 'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-95 transform-gpu';
   
   const variantClasses = {
-    primary: 'bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500/50 shadow-apple disabled:opacity-50 disabled:cursor-not-allowed',
-    secondary: 'bg-neutral-100 text-neutral-900 hover:bg-neutral-200 focus:ring-neutral-500/50 disabled:opacity-50 disabled:cursor-not-allowed',
-    outline: 'border border-neutral-300 text-neutral-700 hover:bg-neutral-50 hover:border-neutral-400 focus:ring-neutral-500/50 disabled:opacity-50 disabled:cursor-not-allowed',
-    ghost: 'text-neutral-600 hover:bg-neutral-100/60 hover:text-neutral-900 focus:ring-neutral-500/50 disabled:opacity-50 disabled:cursor-not-allowed'
+    primary: 'bg-midnight-800 text-white hover:bg-midnight-900 focus:ring-midnight-500/30 shadow-apple-lg disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-apple-xl',
+    secondary: 'bg-cool-100 text-midnight-800 hover:bg-cool-200 focus:ring-cool-500/30 disabled:opacity-50 disabled:cursor-not-allowed',
+    outline: 'border border-cool-300 text-cool-700 hover:bg-cool-50 hover:border-cool-400 focus:ring-cool-500/30 disabled:opacity-50 disabled:cursor-not-allowed',
+    ghost: 'text-cool-600 hover:bg-cool-100/60 hover:text-midnight-800 focus:ring-cool-500/30 disabled:opacity-50 disabled:cursor-not-allowed'
   };
   
   const sizeClasses = {
