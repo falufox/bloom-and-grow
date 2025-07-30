@@ -2,6 +2,7 @@ import React from 'react';
 
 interface CustomIconProps {
   className?: string;
+  isNavigation?: boolean;
 }
 
 export const GardenShearsIcon: React.FC<CustomIconProps> = ({ className }) => (
@@ -9,7 +10,11 @@ export const GardenShearsIcon: React.FC<CustomIconProps> = ({ className }) => (
     src="/icons/gardenshears.png" 
     alt="Garden Shears" 
     className={className}
-    style={{ filter: 'brightness(0) invert(1)' }} // Make white for dark nav
+    style={{ 
+      objectFit: 'contain',
+      width: '100%',
+      height: '100%'
+    }}
   />
 );
 
@@ -18,7 +23,11 @@ export const MoneyBagsIcon: React.FC<CustomIconProps> = ({ className }) => (
     src="/icons/moneybags.png" 
     alt="Money Bags" 
     className={className}
-    style={{ filter: 'brightness(0) invert(1)' }} // Make white for dark nav
+    style={{ 
+      objectFit: 'contain',
+      width: '100%',
+      height: '100%'
+    }}
   />
 );
 
@@ -27,6 +36,10 @@ export const RaisedBedIcon: React.FC<CustomIconProps> = ({ className }) => (
     src="/icons/raisedbed.png" 
     alt="Raised Bed" 
     className={className}
-    style={{ filter: 'brightness(0) invert(1)' }} // Make white for dark nav
+    style={{ 
+      objectFit: 'contain',
+      width: '100%',
+      height: '100%'
+    }}
   />
 );
