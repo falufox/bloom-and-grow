@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
+import { useGarden } from '../contexts/GardenContext';
 import { Plus, Scissors, Package, DollarSign } from 'lucide-react';
 
 interface HarvestEntry {
@@ -10,7 +11,7 @@ interface HarvestEntry {
   variety: string;
   stemCount: number;
   quality: 'premium' | 'good' | 'fair';
-  bedId: string;
+  spaceId: string;
   notes: string;
 }
 
@@ -30,7 +31,7 @@ export const Cutting: React.FC = () => {
       variety: 'Sunflower - Mammoth',
       stemCount: 15,
       quality: 'premium',
-      bedId: 'bed-1',
+      spaceId: 'space-1',
       notes: 'Perfect timing, long stems'
     },
     {
@@ -39,7 +40,7 @@ export const Cutting: React.FC = () => {
       variety: 'Zinnia - State Fair Mix',
       stemCount: 32,
       quality: 'good',
-      bedId: 'bed-1',
+      spaceId: 'space-1',
       notes: 'Mixed colors, some smaller stems'
     }
   ]);
@@ -72,17 +73,15 @@ export const Cutting: React.FC = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [newHarvest, setNewHarvest] = useState({
     variety: '',
-    stemCount: '',
+    stemCount: '0',
     quality: 'good' as 'premium' | 'good' | 'fair',
-    bedId: '',
+    spaceId: '',
     notes: ''
   });
 
-  const beds = [
-    { id: 'bed-1', name: 'Bed 1 - Sunflowers & Zinnias' },
-    { id: 'bed-2', name: 'Bed 2 - Cosmos' },
-    { id: 'bed-3', name: 'Bed 3 - Dahlias' }
-  ];
+  const { plantingSpaces, gardenSetup } = useGarden();
+  const isContainerGardening = gardenSetup.gardenType === 'container';
+  const spaceLabel = isContainerGardening ? 'Container' : 'Bed';
 
   const addHarvest = () => {
     if (newHarvest.variety && newHarvest.stemCount) {
@@ -90,13 +89,13 @@ export const Cutting: React.FC = () => {
         id: Date.now().toString(),
         date: new Date().toISOString().split('T')[0],
         variety: newHarvest.variety,
-        stemCount: parseInt(newHarvest.stemCount),
+        stemCount: parseInt(newHarvest.stemCount) || 0,
         quality: newHarvest.quality,
-        bedId: newHarvest.bedId,
+        spaceId: newHarvest.spaceId,
         notes: newHarvest.notes
       };
       setHarvests([...harvests, harvest]);
-      setNewHarvest({ variety: '', stemCount: '', quality: 'good', bedId: '', notes: '' });
+      setNewHarvest({ variety: '', stemCount: '0', quality: 'good', spaceId: '', notes: '' });
       setShowAddForm(false);
     }
   };
@@ -218,15 +217,15 @@ export const Cutting: React.FC = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-midnight-blue mb-1">Bed</label>
+                  <label className="block text-sm font-medium text-midnight-blue mb-1">{spaceLabel}</label>
                   <select
-                    value={newHarvest.bedId}
-                    onChange={(e) => setNewHarvest({ ...newHarvest, bedId: e.target.value })}
+                    value={newHarvest.spaceId}
+                    onChange={(e) => setNewHarvest({ ...newHarvest, spaceId: e.target.value })}
                     className="block w-full rounded-lg border-gray-300 bg-white px-3 py-2 text-midnight-blue shadow-sm focus:border-midnight-blue focus:outline-none focus:ring-1 focus:ring-midnight-blue"
                   >
-                    <option value="">Select a bed</option>
-                    {beds.map(bed => (
-                      <option key={bed.id} value={bed.id}>{bed.name}</option>
+                    <option value="">Select a {spaceLabel.toLowerCase()}</option>
+                    {plantingSpaces.map(space => (
+                      <option key={space.id} value={space.id}>{space.name}</option>
                     ))}
                   </select>
                 </div>
@@ -265,7 +264,7 @@ export const Cutting: React.FC = () => {
                         <span className="font-medium">Stems:</span> {harvest.stemCount}
                       </div>
                       <div>
-                        <span className="font-medium">Bed:</span> {beds.find(b => b.id === harvest.bedId)?.name}
+                        <span className="font-medium">{spaceLabel}:</span> {plantingSpaces.find(s => s.id === harvest.spaceId)?.name}
                       </div>
                       <div>
                         <span className="font-medium">Value:</span> $

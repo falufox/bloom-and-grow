@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
-import { Plus, Calendar, Thermometer, Cloud, CheckCircle } from 'lucide-react';
+import { useGarden } from '../contexts/GardenContext';
+import { Plus, Calendar, Thermometer, Cloud, CheckCircle, Flower2, Package, FileText, Sparkles } from 'lucide-react';
 
 interface PlantingEntry {
   id: string;
   date: string;
+  flower: string;
   variety: string;
-  bedId: string;
+  spaceId: string;
   quantity: number;
   spacing: string;
   notes: string;
@@ -16,12 +18,17 @@ interface PlantingEntry {
 }
 
 export const Planting: React.FC = () => {
+  const { plantingSpaces, gardenSetup } = useGarden();
+  const isContainerGardening = gardenSetup.gardenType === 'container';
+  const spaceLabel = isContainerGardening ? 'Container' : 'Bed';
+  
   const [plantings, setPlantings] = useState<PlantingEntry[]>([
     {
       id: '1',
       date: '2024-03-15',
-      variety: 'Sunflower - Mammoth',
-      bedId: 'bed-1',
+      flower: 'Sunflower',
+      variety: 'Mammoth',
+      spaceId: 'space-1',
       quantity: 12,
       spacing: '12 inches',
       notes: 'Direct seeded in prepared rows',
@@ -30,8 +37,9 @@ export const Planting: React.FC = () => {
     {
       id: '2',
       date: '2024-03-20',
-      variety: 'Zinnia - State Fair Mix',
-      bedId: 'bed-1',
+      flower: 'Zinnia',
+      variety: 'State Fair Mix',
+      spaceId: 'space-1',
       quantity: 24,
       spacing: '6 inches',
       notes: 'Started from transplants',
@@ -41,35 +49,40 @@ export const Planting: React.FC = () => {
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [newPlanting, setNewPlanting] = useState({
+    flower: '',
     variety: '',
-    bedId: '',
+    spaceId: '',
     quantity: '',
     spacing: '',
     notes: ''
   });
+  
+  const [completedTasks, setCompletedTasks] = useState<Set<string>>(new Set());
 
-  const beds = [
-    { id: 'bed-1', name: 'Bed 1 - Sunflowers & Zinnias' },
-    { id: 'bed-2', name: 'Bed 2 - Cosmos' },
-    { id: 'bed-3', name: 'Bed 3 - Dahlias' }
-  ];
+  // Check if all planting tasks are completed for delightful feature
+  const allTasksCompleted = plantings.length > 0 && plantings.every(p => p.status === 'established');
 
   const addPlanting = () => {
-    if (newPlanting.variety && newPlanting.bedId && newPlanting.quantity) {
+    if (newPlanting.flower && newPlanting.variety && newPlanting.spaceId && newPlanting.quantity) {
       const planting: PlantingEntry = {
         id: Date.now().toString(),
         date: new Date().toISOString().split('T')[0],
+        flower: newPlanting.flower,
         variety: newPlanting.variety,
-        bedId: newPlanting.bedId,
+        spaceId: newPlanting.spaceId,
         quantity: parseInt(newPlanting.quantity),
         spacing: newPlanting.spacing,
         notes: newPlanting.notes,
         status: 'planted'
       };
       setPlantings([...plantings, planting]);
-      setNewPlanting({ variety: '', bedId: '', quantity: '', spacing: '', notes: '' });
+      setNewPlanting({ flower: '', variety: '', spaceId: '', quantity: '', spacing: '', notes: '' });
       setShowAddForm(false);
     }
+  };
+  
+  const updatePlantingStatus = (id: string, status: 'planted' | 'germinated' | 'established') => {
+    setPlantings(prev => prev.map(p => p.id === id ? { ...p, status } : p));
   };
 
   const statusColors = {
@@ -122,6 +135,24 @@ export const Planting: React.FC = () => {
         </Card>
       </div>
 
+      {/* Delightful completion feature */}
+      {allTasksCompleted && plantings.length > 0 && (
+        <Card className="border-2 border-green-300 bg-gradient-to-r from-green-50 to-emerald-50">
+          <CardContent className="p-6 text-center">
+            <Sparkles className="w-12 h-12 text-green-600 mx-auto mb-4 animate-pulse" />
+            <h3 className="text-xl font-bold text-green-800 mb-2">🌸 Congratulations! 🌸</h3>
+            <p className="text-green-700 mb-4">
+              All your plantings are now established and thriving! Your flower farm is blooming beautifully.
+            </p>
+            <div className="flex justify-center items-center space-x-2 text-green-600">
+              <Flower2 className="w-5 h-5" />
+              <span className="font-medium">Ready for the next growing phase!</span>
+              <Flower2 className="w-5 h-5" />
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Add New Planting */}
       <Card>
         <CardHeader>
@@ -139,21 +170,28 @@ export const Planting: React.FC = () => {
               <h3 className="font-semibold text-midnight-blue mb-4">Record New Planting</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <Input
-                  label="Flower Variety"
+                  label="Flower Type"
+                  value={newPlanting.flower}
+                  onChange={(e) => setNewPlanting({ ...newPlanting, flower: e.target.value })}
+                  placeholder="e.g., Sunflower"
+                  icon={<Flower2 className="w-4 h-4" />}
+                />
+                <Input
+                  label="Variety"
                   value={newPlanting.variety}
                   onChange={(e) => setNewPlanting({ ...newPlanting, variety: e.target.value })}
-                  placeholder="e.g., Sunflower - Mammoth"
+                  placeholder="e.g., Mammoth"
                 />
                 <div>
-                  <label className="block text-sm font-medium text-midnight-blue mb-1">Bed</label>
+                  <label className="block text-sm font-medium text-midnight-blue mb-1">{spaceLabel}</label>
                   <select
-                    value={newPlanting.bedId}
-                    onChange={(e) => setNewPlanting({ ...newPlanting, bedId: e.target.value })}
+                    value={newPlanting.spaceId}
+                    onChange={(e) => setNewPlanting({ ...newPlanting, spaceId: e.target.value })}
                     className="block w-full rounded-lg border-gray-300 bg-white px-3 py-2 text-midnight-blue shadow-sm focus:border-midnight-blue focus:outline-none focus:ring-1 focus:ring-midnight-blue"
                   >
-                    <option value="">Select a bed</option>
-                    {beds.map(bed => (
-                      <option key={bed.id} value={bed.id}>{bed.name}</option>
+                    <option value="">Select a {spaceLabel.toLowerCase()}</option>
+                    {plantingSpaces.map(space => (
+                      <option key={space.id} value={space.id}>{space.name}</option>
                     ))}
                   </select>
                 </div>
@@ -168,16 +206,21 @@ export const Planting: React.FC = () => {
                   label="Spacing"
                   value={newPlanting.spacing}
                   onChange={(e) => setNewPlanting({ ...newPlanting, spacing: e.target.value })}
-                  placeholder="6 inches"
+                  placeholder={isContainerGardening ? "3 inches" : "6 inches"}
                 />
               </div>
-              <Input
-                label="Notes"
-                value={newPlanting.notes}
-                onChange={(e) => setNewPlanting({ ...newPlanting, notes: e.target.value })}
-                placeholder="Direct seeded, transplants, etc."
-                className="mb-4"
-              />
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-midnight-blue mb-2">
+                  <FileText className="w-4 h-4 inline mr-1" />
+                  Notes (for future reference)
+                </label>
+                <textarea
+                  value={newPlanting.notes}
+                  onChange={(e) => setNewPlanting({ ...newPlanting, notes: e.target.value })}
+                  placeholder="Record planting method, soil conditions, weather, special observations, or any tips for next season..."
+                  className="block w-full rounded-lg border-gray-300 bg-white px-3 py-2 text-midnight-blue shadow-sm focus:border-midnight-blue focus:outline-none focus:ring-1 focus:ring-midnight-blue min-h-[80px] resize-y"
+                />
+              </div>
               <div className="flex space-x-2">
                 <Button onClick={addPlanting}>Save Planting</Button>
                 <Button variant="ghost" onClick={() => setShowAddForm(false)}>Cancel</Button>
@@ -192,7 +235,7 @@ export const Planting: React.FC = () => {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
-                      <h3 className="font-semibold text-midnight-blue">{planting.variety}</h3>
+                      <h3 className="font-semibold text-midnight-blue">{planting.flower} - {planting.variety}</h3>
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColors[planting.status]}`}>
                         {planting.status}
                       </span>
@@ -202,7 +245,7 @@ export const Planting: React.FC = () => {
                         <span className="font-medium">Date:</span> {new Date(planting.date).toLocaleDateString()}
                       </div>
                       <div>
-                        <span className="font-medium">Bed:</span> {beds.find(b => b.id === planting.bedId)?.name}
+                        <span className="font-medium">{spaceLabel}:</span> {plantingSpaces.find(s => s.id === planting.spaceId)?.name}
                       </div>
                       <div>
                         <span className="font-medium">Quantity:</span> {planting.quantity}
@@ -215,8 +258,30 @@ export const Planting: React.FC = () => {
                       <p className="text-sm text-gray-600 italic">{planting.notes}</p>
                     )}
                   </div>
-                  <div className="ml-4">
-                    <Button variant="ghost" size="sm">Update Status</Button>
+                  <div className="ml-4 flex flex-col space-y-1">
+                    {planting.status === 'planted' && (
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => updatePlantingStatus(planting.id, 'germinated')}
+                        className="text-xs"
+                      >
+                        Mark Germinated
+                      </Button>
+                    )}
+                    {planting.status === 'germinated' && (
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => updatePlantingStatus(planting.id, 'established')}
+                        className="text-xs"
+                      >
+                        Mark Established
+                      </Button>
+                    )}
+                    {planting.status === 'established' && (
+                      <CheckCircle className="w-5 h-5 text-green-600" />
+                    )}
                   </div>
                 </div>
               </div>
