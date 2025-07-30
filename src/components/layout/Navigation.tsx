@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   Settings, 
-  Calendar, 
   Wrench, 
   Flower2 
 } from 'lucide-react';

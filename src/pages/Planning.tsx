@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
-import { useGarden, PlantingSpace } from '../contexts/GardenContext';
+import { useGarden } from '../contexts/GardenContext';
+import type { PlantingSpace } from '../contexts/GardenContext';
 import { RaisedBedIcon } from '../components/icons/CustomIcons';
-import { Plus, Edit3, Camera, Grid, Package } from 'lucide-react';
+import { Plus, Edit3, Camera, Package } from 'lucide-react';
 
 
 export const Planning: React.FC = () => {

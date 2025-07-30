@@ -3,7 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card'
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { useGarden } from '../contexts/GardenContext';
-import { Plus, Calendar, Thermometer, Cloud, CheckCircle, Flower2, Package, FileText, Sparkles } from 'lucide-react';
+import { Plus, Calendar, Thermometer, Cloud, CheckCircle, Flower2, FileText, Sparkles } from 'lucide-react';
 
 interface PlantingEntry {
   id: string;
@@ -57,7 +57,6 @@ export const Planting: React.FC = () => {
     notes: ''
   });
   
-  const [completedTasks, setCompletedTasks] = useState<Set<string>>(new Set());
 
   // Check if all planting tasks are completed for delightful feature
   const allTasksCompleted = plantings.length > 0 && plantings.every(p => p.status === 'established');
@@ -169,13 +168,15 @@ export const Planting: React.FC = () => {
             <div className="mb-6 p-4 bg-champagne rounded-lg">
               <h3 className="font-semibold text-midnight-blue mb-4">Record New Planting</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <Input
-                  label="Flower Type"
-                  value={newPlanting.flower}
-                  onChange={(e) => setNewPlanting({ ...newPlanting, flower: e.target.value })}
-                  placeholder="e.g., Sunflower"
-                  icon={<Flower2 className="w-4 h-4" />}
-                />
+                <div className="relative">
+                  <Input
+                    label="Flower Type"
+                    value={newPlanting.flower}
+                    onChange={(e) => setNewPlanting({ ...newPlanting, flower: e.target.value })}
+                    placeholder="e.g., Sunflower"
+                  />
+                  <Flower2 className="w-4 h-4 absolute right-3 top-8 text-gray-400" />
+                </div>
                 <Input
                   label="Variety"
                   value={newPlanting.variety}

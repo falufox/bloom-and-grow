@@ -3,7 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card'
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { MoneyBagsIcon } from '../components/icons/CustomIcons';
-import { Plus, DollarSign, TrendingUp, MapPin, CreditCard, Trash2, Calculator, Receipt, Smartphone, Wifi, WifiOff } from 'lucide-react';
+import { Plus, TrendingUp, MapPin, CreditCard, Trash2, Calculator, Receipt, Smartphone, Wifi, WifiOff } from 'lucide-react';
 
 interface Sale {
   id: string;
@@ -503,7 +503,7 @@ export const Selling: React.FC = () => {
                 }
               </p>
               <Button 
-                variant={posIntegrations.square.connected ? "outline" : "default"} 
+                variant={posIntegrations.square.connected ? "outline" : "primary"} 
                 size="sm"
                 onClick={() => connectPOS('square')}
               >
@@ -529,7 +529,7 @@ export const Selling: React.FC = () => {
                 }
               </p>
               <Button 
-                variant={posIntegrations.stripe.connected ? "outline" : "default"} 
+                variant={posIntegrations.stripe.connected ? "outline" : "primary"} 
                 size="sm"
                 onClick={() => connectPOS('stripe')}
               >
@@ -555,7 +555,7 @@ export const Selling: React.FC = () => {
                 }
               </p>
               <Button 
-                variant={posIntegrations.paypal.connected ? "outline" : "default"} 
+                variant={posIntegrations.paypal.connected ? "outline" : "primary"} 
                 size="sm"
                 onClick={() => connectPOS('paypal')}
               >

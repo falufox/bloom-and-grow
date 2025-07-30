@@ -1,7 +1,4 @@
 import React from 'react';
-import gardenshearsIcon from '../../assets/gardenshears.png';
-import moneybagsIcon from '../../assets/moneybags.png';
-import raisedbedIcon from '../../assets/raisedbed.png';
 
 interface CustomIconProps {
   className?: string;
@@ -9,24 +6,27 @@ interface CustomIconProps {
 
 export const GardenShearsIcon: React.FC<CustomIconProps> = ({ className }) => (
   <img 
-    src={gardenshearsIcon} 
+    src="/icons/gardenshears.png" 
     alt="Garden Shears" 
     className={className}
+    style={{ filter: 'brightness(0) invert(1)' }} // Make white for dark nav
   />
 );
 
 export const MoneyBagsIcon: React.FC<CustomIconProps> = ({ className }) => (
   <img 
-    src={moneybagsIcon} 
+    src="/icons/moneybags.png" 
     alt="Money Bags" 
     className={className}
+    style={{ filter: 'brightness(0) invert(1)' }} // Make white for dark nav
   />
 );
 
 export const RaisedBedIcon: React.FC<CustomIconProps> = ({ className }) => (
   <img 
-    src={raisedbedIcon} 
+    src="/icons/raisedbed.png" 
     alt="Raised Bed" 
     className={className}
+    style={{ filter: 'brightness(0) invert(1)' }} // Make white for dark nav
   />
 );
