@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -7,7 +7,9 @@ import {
   Wrench, 
   Flower2, 
   Scissors, 
-  DollarSign 
+  DollarSign,
+  Menu,
+  X
 } from 'lucide-react';
 import { clsx } from 'clsx';
 
@@ -22,14 +24,16 @@ const navigationItems = [
 ];
 
 export const Navigation: React.FC = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
   return (
     <nav className="bg-midnight-50/90 backdrop-blur-apple border-b border-cool-200/60 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-8 lg:px-12">
-        <div className="flex items-center justify-between h-18">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-18">
           {/* Logo */}
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <h1 className="text-2xl font-display font-light text-midnight-900 tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-display font-light text-midnight-900 tracking-tight">
                 Bloom & Grow
               </h1>
             </div>
@@ -37,51 +41,71 @@ export const Navigation: React.FC = () => {
           
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1 lg:space-x-2">
               {navigationItems.map((item) => (
                 <NavLink
                   key={item.name}
                   to={item.href}
                   className={({ isActive }) =>
                     clsx(
-                      'flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ease-out',
+                      'flex items-center px-3 lg:px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ease-out',
                       isActive
                         ? 'bg-midnight-800 text-white shadow-apple-lg'
                         : 'text-cool-600 hover:text-midnight-800 hover:bg-cool-50/80'
                     )
                   }
                 >
-                  <item.icon className="w-3.5 h-3.5 mr-2 stroke-current" strokeWidth={1.5} />
-                  {item.name}
+                  <item.icon className="w-3.5 h-3.5 mr-1.5 lg:mr-2 stroke-current" strokeWidth={1.5} />
+                  <span className="hidden lg:inline">{item.name}</span>
+                  <span className="lg:hidden">{item.name.split(' ')[0]}</span>
                 </NavLink>
               ))}
             </div>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-cool-600 hover:text-midnight-800 hover:bg-cool-50/80 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-midnight-500"
+              aria-expanded="false"
+            >
+              <span className="sr-only">Open main menu</span>
+              {isMobileMenuOpen ? (
+                <X className="block h-6 w-6" strokeWidth={1.5} />
+              ) : (
+                <Menu className="block h-6 w-6" strokeWidth={1.5} />
+              )}
+            </button>
           </div>
         </div>
       </div>
       
       {/* Mobile menu */}
-      <div className="md:hidden">
-        <div className="px-6 pt-3 pb-4 space-y-2 border-t border-cool-200/50 bg-midnight-50/95">
-          {navigationItems.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.href}
-              className={({ isActive }) =>
-                clsx(
-                  'flex items-center px-4 py-3 rounded-xl text-base font-medium transition-all duration-300',
-                  isActive
-                    ? 'bg-midnight-800 text-white shadow-apple'
-                    : 'text-cool-600 hover:text-midnight-800 hover:bg-cool-50/80'
-                )
-              }
-            >
-              <item.icon className="w-3.5 h-3.5 mr-3 stroke-current" strokeWidth={1.5} />
-              {item.name}
-            </NavLink>
-          ))}
+      {isMobileMenuOpen && (
+        <div className="md:hidden">
+          <div className="px-4 pt-2 pb-4 space-y-1 border-t border-cool-200/50 bg-midnight-50/95">
+            {navigationItems.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={({ isActive }) =>
+                  clsx(
+                    'flex items-center px-4 py-3 rounded-xl text-base font-medium transition-all duration-300',
+                    isActive
+                      ? 'bg-midnight-800 text-white shadow-apple'
+                      : 'text-cool-600 hover:text-midnight-800 hover:bg-cool-50/80'
+                  )
+                }
+              >
+                <item.icon className="w-4 h-4 mr-3 stroke-current" strokeWidth={1.5} />
+                {item.name}
+              </NavLink>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </nav>
   );
 };

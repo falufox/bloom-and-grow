@@ -24,9 +24,9 @@ export const Button: React.FC<ButtonProps> = ({
   };
   
   const sizeClasses = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2.5 text-sm font-semibold',
-    lg: 'px-6 py-3 text-base font-semibold'
+    sm: 'px-3 py-1.5 text-sm min-h-[36px]',
+    md: 'px-4 py-2.5 text-sm font-semibold min-h-[44px]',
+    lg: 'px-6 py-3 text-base font-semibold min-h-[48px]'
   };
   
   return (

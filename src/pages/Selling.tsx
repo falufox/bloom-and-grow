@@ -206,27 +206,31 @@ export const Selling: React.FC = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Button onClick={() => setShowAddForm(true)} className="h-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <Button onClick={() => setShowAddForm(true)} className="h-12 sm:h-16">
           <Plus className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
-          Manual Sale Entry
+          <span className="hidden sm:inline">Manual Sale Entry</span>
+          <span className="sm:hidden">Add Sale</span>
         </Button>
         <Button 
           onClick={() => setShowPOSForm(true)} 
           variant="outline" 
-          className="h-16"
+          className="h-12 sm:h-16"
           disabled={!posConnected}
         >
           <Smartphone className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
-          Quick POS Sale
+          <span className="hidden sm:inline">Quick POS Sale</span>
+          <span className="sm:hidden">POS Sale</span>
         </Button>
-        <Button onClick={syncPOSData} variant="outline" className="h-16">
+        <Button onClick={syncPOSData} variant="outline" className="h-12 sm:h-16">
           {posConnected ? <Wifi className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} /> : <WifiOff className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />}
-          Sync POS Data
+          <span className="hidden sm:inline">Sync POS Data</span>
+          <span className="sm:hidden">Sync</span>
         </Button>
-        <Button onClick={generateReport} variant="outline" className="h-16">
+        <Button onClick={generateReport} variant="outline" className="h-12 sm:h-16">
           <Receipt className="w-3.5 h-3.5 mr-2" strokeWidth={1.5} />
-          Generate Report
+          <span className="hidden sm:inline">Generate Report</span>
+          <span className="sm:hidden">Report</span>
         </Button>
       </div>
 

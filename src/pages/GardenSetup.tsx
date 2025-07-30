@@ -67,10 +67,10 @@ export const GardenSetup: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
       <div className="text-center">
-        <h1 className="text-4xl font-display font-light text-midnight-900 mb-3 tracking-tight">Garden Setup</h1>
-        <p className="text-cool-600 text-lg font-serif">Let's design your perfect flower farm</p>
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-display font-light text-midnight-900 mb-2 sm:mb-3 tracking-tight">Garden Setup</h1>
+        <p className="text-cool-600 text-base sm:text-lg font-serif">Let's design your perfect flower farm</p>
       </div>
 
       {/* Garden Type Selection */}
@@ -82,7 +82,7 @@ export const GardenSetup: React.FC = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {gardenTypes.map((type) => (
               <div
                 key={type.id}
@@ -114,7 +114,7 @@ export const GardenSetup: React.FC = () => {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-midnight-900 mb-3">Container Type</label>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                   {[
                     { id: 'round', name: 'Round Pots', description: 'Traditional circular containers' },
                     { id: 'rectangular', name: 'Rectangular Planters', description: 'Efficient space usage' },
@@ -136,7 +136,7 @@ export const GardenSetup: React.FC = () => {
                 </div>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {containerSpecs.type === 'round' ? (
                   <Input
                     label="Diameter (inches)"
@@ -223,7 +223,7 @@ export const GardenSetup: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               <button
                 onClick={() => handleSeasonGoalChange('1000')}
                 className={`p-4 rounded-lg border-2 text-center transition-all duration-200 ${
@@ -280,7 +280,7 @@ export const GardenSetup: React.FC = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <Input
               label="ZIP Code"
               placeholder="Enter your ZIP code"
@@ -296,9 +296,9 @@ export const GardenSetup: React.FC = () => {
       </Card>
 
       {/* Action Buttons */}
-      <div className="flex justify-center space-x-4">
-        <Button onClick={saveDraft} variant="outline">Save Draft</Button>
-        <Button onClick={() => navigate('/planning')}>Continue to Planning</Button>
+      <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+        <Button onClick={saveDraft} variant="outline" className="w-full sm:w-auto">Save Draft</Button>
+        <Button onClick={() => navigate('/planning')} className="w-full sm:w-auto">Continue to Planning</Button>
       </div>
     </div>
   );
