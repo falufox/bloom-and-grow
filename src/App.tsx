@@ -1,9 +1,6 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { GardenProvider } from './contexts/GardenContext';
-import { WelcomeProvider, useWelcome } from './contexts/WelcomeContext';
-import { WelcomeWizard } from './components/WelcomeWizard';
 import { GardenGlance } from './pages/GardenGlance';
 import { GardenSetup } from './pages/GardenSetup';
 import { Planning } from './pages/Planning';
@@ -12,11 +9,9 @@ import { Planting } from './pages/Planting';
 import { Cutting } from './pages/Cutting';
 import { Selling } from './pages/Selling';
 
-const AppContent: React.FC = () => {
-  const { showWelcomeWizard, completeWelcome, skipWelcome } = useWelcome();
-
+function App() {
   return (
-    <>
+    <GardenProvider>
       <Router>
         <Layout>
           <Routes>
@@ -30,24 +25,7 @@ const AppContent: React.FC = () => {
           </Routes>
         </Layout>
       </Router>
-      
-      {showWelcomeWizard && (
-        <WelcomeWizard
-          onComplete={completeWelcome}
-          onSkip={skipWelcome}
-        />
-      )}
-    </>
-  );
-};
-
-function App() {
-  return (
-    <WelcomeProvider>
-      <GardenProvider>
-        <AppContent />
-      </GardenProvider>
-    </WelcomeProvider>
+    </GardenProvider>
   );
 }
 
