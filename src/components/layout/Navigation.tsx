@@ -14,13 +14,13 @@ import {
 import { clsx } from 'clsx';
 
 const navigationItems = [
-  { name: 'Garden at a Glance', href: '/', icon: LayoutDashboard },
-  { name: 'Garden Setup', href: '/setup', icon: Settings },
-  { name: 'Planning', href: '/planning', icon: Calendar },
-  { name: 'Prepping', href: '/prepping', icon: Wrench },
-  { name: 'Planting', href: '/planting', icon: Flower2 },
-  { name: 'Cutting', href: '/cutting', icon: Scissors },
-  { name: 'Selling', href: '/selling', icon: DollarSign },
+  { name: 'Garden at a Glance', shortName: 'Overview', href: '/', icon: LayoutDashboard },
+  { name: 'Garden Setup', shortName: 'Setup', href: '/setup', icon: Settings },
+  { name: 'Planning', shortName: 'Planning', href: '/planning', icon: Calendar },
+  { name: 'Prepping', shortName: 'Prepping', href: '/prepping', icon: Wrench },
+  { name: 'Planting', shortName: 'Planting', href: '/planting', icon: Flower2 },
+  { name: 'Cutting', shortName: 'Cutting', href: '/cutting', icon: Scissors },
+  { name: 'Selling', shortName: 'Selling', href: '/selling', icon: DollarSign },
 ];
 
 export const Navigation: React.FC = () => {
@@ -41,23 +41,23 @@ export const Navigation: React.FC = () => {
           
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="flex items-center space-x-1 lg:space-x-2">
+            <div className="flex items-center space-x-1">
               {navigationItems.map((item) => (
                 <NavLink
                   key={item.name}
                   to={item.href}
                   className={({ isActive }) =>
                     clsx(
-                      'flex items-center px-3 lg:px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ease-out',
+                      'flex items-center px-2 lg:px-3 xl:px-4 py-2.5 rounded-xl text-xs lg:text-sm font-medium transition-all duration-300 ease-out',
                       isActive
                         ? 'bg-midnight-800 text-white shadow-apple-lg'
                         : 'text-cool-600 hover:text-midnight-800 hover:bg-cool-50/80'
                     )
                   }
                 >
-                  <item.icon className="w-3.5 h-3.5 mr-1.5 lg:mr-2 stroke-current" strokeWidth={1.5} />
-                  <span className="hidden lg:inline">{item.name}</span>
-                  <span className="lg:hidden">{item.name.split(' ')[0]}</span>
+                  <item.icon className="w-3.5 h-3.5 mr-1.5 xl:mr-2 stroke-current" strokeWidth={1.5} />
+                  <span className="hidden xl:inline">{item.name}</span>
+                  <span className="xl:hidden">{item.shortName}</span>
                 </NavLink>
               ))}
             </div>
