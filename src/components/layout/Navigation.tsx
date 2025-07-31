@@ -9,9 +9,11 @@ import {
   Scissors, 
   DollarSign,
   Menu,
-  X
+  X,
+  HelpCircle
 } from 'lucide-react';
 import { clsx } from 'clsx';
+import { useWelcome } from '../../contexts/WelcomeContext';
 
 const navigationItems = [
   { name: 'Garden at a Glance', href: '/', icon: LayoutDashboard },
@@ -25,6 +27,7 @@ const navigationItems = [
 
 export const Navigation: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { resetWelcome } = useWelcome();
   
   return (
     <nav className="bg-midnight-50/90 backdrop-blur-apple border-b border-cool-200/60 sticky top-0 z-50">
@@ -60,6 +63,16 @@ export const Navigation: React.FC = () => {
                   <span className="lg:hidden">{item.name.split(' ')[0]}</span>
                 </NavLink>
               ))}
+              
+              {/* Help/Welcome Tour Button - Desktop */}
+              <button
+                onClick={resetWelcome}
+                className="flex items-center px-3 lg:px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ease-out text-cool-600 hover:text-midnight-800 hover:bg-cool-50/80"
+                title="Show Welcome Tour"
+              >
+                <HelpCircle className="w-3.5 h-3.5 lg:mr-2 stroke-current" strokeWidth={1.5} />
+                <span className="hidden lg:inline">Help</span>
+              </button>
             </div>
           </div>
 
@@ -103,6 +116,18 @@ export const Navigation: React.FC = () => {
                 {item.name}
               </NavLink>
             ))}
+            
+            {/* Help/Welcome Tour Button - Mobile */}
+            <button
+              onClick={() => {
+                resetWelcome();
+                setIsMobileMenuOpen(false);
+              }}
+              className="flex items-center px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 text-cool-600 hover:text-midnight-800 hover:bg-cool-50/80 w-full text-left"
+            >
+              <HelpCircle className="w-4 h-4 mr-3 stroke-current" strokeWidth={1.5} />
+              Show Welcome Tour
+            </button>
           </div>
         </div>
       )}
